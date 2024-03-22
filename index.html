@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    a {
+      display: block;
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      text-decoration: none;
+      background: wheat;
+    }
+  </style>
+  <script type="module" src="/pyscript/core.js"></script>
+  <link rel="stylesheet" href="/pyscript/core.css">
+</head>
+<body>
+  <mpy-config>
+    interpreter = "/pyodide/pyodide.mjs"
+  </mpy-config>
+  <div style="display: flex;">
+    <a href="https://disk.yandex.ru/d/rvxmhiSIhDSMCA">Материалы</a>
+    <a href="https://disk.yandex.ru/d/LADtnZajP19xeQ">Полный курс HTML</a>
+    <a id="anchor" href="https://disk.yandex.ru/d/LADtnZajP19xeQ">Нерабочая ссылка</a>
+    <a href="https://wp-kama.ru/id_5875/30-css-selektorov.html">CSS селекторы</a>
+    <a href="https://cheatsheets.super-mark.ru/">Шпоры 1</a>
+    <a href="https://tproger.ru/translations/javascript-cheatsheet">Шпоры 2</a>
+    <a href="https://overapi.com/javascript">Шпоры 3</a>
+    <a href="https://quickref.me/javascript">Шпоры 4</a>
+  </div>
+<script type="py" src="./main.py" config="./pyscript.json"></script>
+</body>
+</html>
