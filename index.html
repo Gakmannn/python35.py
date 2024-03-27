@@ -21,6 +21,11 @@
   <mpy-config>
     interpreter = "pyodide/pyodide.mjs"
   </mpy-config>
+
+  <input type="text" name="english" id="english" placeholder="Type English here..." />
+  <button py-click="translate_english">Translate</button>
+  <div id="output"></div>
+
   <div style="display: flex;">
     <a href="https://disk.yandex.ru/d/rvxmhiSIhDSMCA">Материалы</a>
     <a href="https://disk.yandex.ru/d/LADtnZajP19xeQ">Полный курс HTML</a>
