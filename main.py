@@ -107,9 +107,69 @@ var -=1
 print(var)
 print(27**(1/3))
 
-inp = int(input('Введи число\n'))
-print(inp)
+# inp = int(input('Введи число\n'))
+# print(inp)
 
 print("+" + 10 * "-" + "+")
 print(("|" + " " * 10 + "|\n") * 5, end="")
 print("+" + 10 * "-" + "+")
+
+
+print(bool("")) 
+print(bool(0.0))
+print(bool(None))
+print(bool("IT Step Academy"))
+print(bool(1)) 
+print(bool({})) 
+print(bool([])) 
+print(1 and 8 and 0) 
+print(0 or '' or 8 or []) 
+
+car_speed = 100
+if 50 < car_speed < 150:
+  print("Car is faster than 50 km/h")
+elif car_speed == 100:
+  print('"---"')
+else:
+  print('moto')
+  
+try:
+  1/0
+except ValueError:
+  print("Improper value was obtained")
+except Exception as ex:
+  print("Hmm... Something went wrong", ex)
+
+# while True:
+#   try:
+#     apples = int(input("Enter the amount of apples you have: "))
+#     if apples < 0:
+#       raise Exception("You can’t have -10 apples")
+#     parts_number = int(input("Enter the number of parts:"))
+#     parts_amount = apples / parts_number
+#     print("You have " + str(apples) + " apples \n")
+#     print("Each of " + str(parts_number) +
+#     " parts consists of " +
+#     str(parts_amount) + " apples")
+#   except (ZeroDivisionError, ValueError):
+#     print("Improper value was obtained")
+#   except Exception as ex:
+#     print(ex)
+#   except:
+#     print("Hmm... Something went wrong")
+
+# print(input('3 num split space').split(' '))
+
+number = 0
+while number < 300:
+  number += 1
+  if number % 3 != 0:
+    continue
+  elif number % 5 != 0:
+    print(number, "divides by 3")
+  elif number % 7 != 0:
+    print(number, "divides by 3 and 5")
+  else:
+    print(number, "divides by 3 and 5 and 7")
+    
+    
