@@ -13,14 +13,16 @@
       text-decoration: none;
       background: wheat;
     }
-  </style>
+    </style>
   <script type="module" src="./pyscript/core.js"></script>
   <link rel="stylesheet" href="./pyscript/core.css">
+  <script src="./mini-coi.js" scope="./"></script>
 </head>
 <body>
   <mpy-config>
     interpreter = "pyodide/pyodide.mjs"
   </mpy-config>
+  <button py-click="SumOrMul">SumOrMul</button>
 
   <input type="text" name="english" id="english" placeholder="Type English here..." />
   <button py-click="translate_english">Translate</button>
@@ -36,6 +38,7 @@
     <a href="https://overapi.com/javascript">Шпоры 3</a>
     <a href="https://quickref.me/javascript">Шпоры 4</a>
   </div>
-<script type="py" src="./main.py" config="./pyscript.json"></script>
+<!-- <script type="py" src="./main.py"></script> -->
+<script type="py" src="./funcs.py"></script>
 </body>
 </html>
