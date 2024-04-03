@@ -20,12 +20,15 @@
       display: block;
     }
     .hide span{
-      display: inline;
+      display: inline-block;
+      margin: 13px 0;
     }
     .hide pre{
       display: none;
     }
-
+    #output {
+      margin: 20px 0 0 30px;
+    }
     </style>
   <script type="module" src="./pyscript/core.js"></script>
   <!-- <script type="module" src="./pyodide/pyodide.mjs"></script> -->
@@ -70,7 +73,7 @@
     print(f"mul is {total}")
     
     
-</code></pre></div><button py-click="PZ3_1">PZ3_1</button><div class="code hide"><span>Показать код</span><pre><code>
+</code></pre></div><button py-click="PZ3_1_Рассчет_ЗП">PZ3_1_Рассчет_ЗП</button><div class="code hide"><span>Показать код</span><pre><code>
   numsStr = input('3 num split space')
   nums=''
   if numsStr:

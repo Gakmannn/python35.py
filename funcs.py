@@ -5,6 +5,7 @@ with contextlib.suppress(ImportError):
   input = window.prompt
   print = window.alert
 
+
 def SumOrMul(event):
   numsStr = input('3 num split space')
   nums=''
@@ -28,7 +29,7 @@ def SumOrMul(event):
     print(f"mul is {total}")
     
     
-def PZ3_1(event):
+def PZ3_1_Рассчет_ЗП(event):
   numsStr = input('3 num split space')
   nums=''
   if numsStr:
