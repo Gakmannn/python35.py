@@ -30,12 +30,11 @@ jobs:
         uses: actions/configure-pages@v3
       - name: Build html
         run: node makehtml.js
-        working-directory: ${{ env.BUILD_PATH }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ${{ env.BUILD_PATH }}/
-
+          path: ./
+      
   deploy:
     environment:
       name: github-pages
