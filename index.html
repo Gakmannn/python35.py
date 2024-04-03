@@ -13,8 +13,22 @@
       text-decoration: none;
       background: wheat;
     }
+    .code span {
+      display: none;
+    }
+    .code pre {
+      display: block;
+    }
+    .hide span{
+      display: inline;
+    }
+    .hide pre{
+      display: none;
+    }
+
     </style>
   <script type="module" src="./pyscript/core.js"></script>
+  <!-- <script type="module" src="./pyodide/pyodide.mjs"></script> -->
   <link rel="stylesheet" href="./pyscript/core.css">
   <script src="./mini-coi.js" scope="./"></script>
 </head>
@@ -22,12 +36,7 @@
   <mpy-config>
     interpreter = "pyodide/pyodide.mjs"
   </mpy-config>
-  <button py-click="SumOrMul">SumOrMul</button>
-
-  <input type="text" name="english" id="english" placeholder="Type English here..." />
-  <button py-click="translate_english">Translate</button>
-  <div id="output"></div>
-
+  
   <div style="display: flex;">
     <a href="https://disk.yandex.ru/d/rvxmhiSIhDSMCA">Материалы</a>
     <a href="https://disk.yandex.ru/d/LADtnZajP19xeQ">Полный курс HTML</a>
@@ -38,7 +47,60 @@
     <a href="https://overapi.com/javascript">Шпоры 3</a>
     <a href="https://quickref.me/javascript">Шпоры 4</a>
   </div>
+  <div id="output"><button py-click="SumOrMul">SumOrMul</button><div class="code hide"><span>Показать код</span><pre><code>
+  numsStr = input('3 num split space')
+  nums=''
+  if numsStr:
+    nums = numsStr.split()
+  operation = input('operation type (* or +)')
+  total = 0
+
+  if operation == '*':
+    total = 1
+
+  for n in nums:
+    if operation == '+':
+      total+=int(n)
+    else:
+      total*=int(n)
+      
+  if operation == '+':
+    print(f"sum is {total}")
+  else:
+    print(f"mul is {total}")
+    
+    
+</code></pre></div><button py-click="PZ3_1">PZ3_1</button><div class="code hide"><span>Показать код</span><pre><code>
+  numsStr = input('3 num split space')
+  nums=''
+  if numsStr:
+    nums = numsStr.split()
+  operation = input('operation type (* or +)')
+  total = 0
+
+  if operation == '*':
+    total = 1
+
+  for n in nums:
+    if operation == '+':
+      total+=int(n)
+    else:
+      total*=int(n)
+      
+  if operation == '+':
+    print(f"sum is {total}")
+  else:
+    print(f"mul is {total}")
+    </code></pre></div></div><div id="outputEnd"></div>
 <!-- <script type="py" src="./main.py"></script> -->
 <script type="py" src="./funcs.py"></script>
+<script>
+  document.addEventListener('click', (e)=>{
+    const parent = e.target.closest('.code')
+    if (parent) {
+      parent.classList.toggle('hide')
+    }
+  })
+</script>
 </body>
 </html>
