@@ -6,7 +6,9 @@ with contextlib.suppress(ImportError):
   print = window.alert
 
 
-def SumOrMul(event):
+def DZ_2_1_1_SumOrMul(event):
+# Пользователь вводит с клавиатуры три числа. В зависимости от выбора пользователя программа выводит 
+# на экран сумму трёх чисел или произведение трёх чисел
   numsStr = input('3 num split space')
   nums=''
   if numsStr:
@@ -29,12 +31,20 @@ def SumOrMul(event):
     print(f"mul is {total}")
     
     
-def DZ3_4_min_max_sum(event):
+def DZ3_2_4_min_max_sum(event):
+# Пользователь вводит с клавиатуры числа. Программа должна подсчитывать сумму, максимум и минимум, 
+# введенных чисел. Когда пользователь вводит число 7 
+# программа прекращает свою работу и выводит на экран 
+# надпись «Good bye!»
   sum = 0
   min = None
   max = None
   while True:
-    n = int(input('Введите число'))
+    n = input('Введите число')
+    if n:
+      n = int(n)
+    else:
+      return
     if n==7:
       print('Good bye')
       break
@@ -48,8 +58,14 @@ def DZ3_4_min_max_sum(event):
     sum+=n
     print(f"min = {min}\nmax = {max}\nsum = {sum}")
     
-def DZ3_3_36(event):
-  n = int(input('Введите число'))
+def DZ3_3_4_remove3and6(event):
+# Пользователь вводит любое целое число. Необходимо из этого целого числа удалить все цифры 3 и 6 и 
+# вывести обратно на экран. 
+  n = input('Введите число')
+  if n:
+    n = int(n)
+  else:
+    return
   # print (''.join(''.join(nStr.split('3')).split('6')))
   tail = ''
   while n:

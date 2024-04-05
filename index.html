@@ -50,7 +50,9 @@
     <a href="https://overapi.com/javascript">Шпоры 3</a>
     <a href="https://quickref.me/javascript">Шпоры 4</a>
   </div>
-  <div id="output"><button py-click="SumOrMul">SumOrMul</button><div class="code hide"><span>Показать код</span><pre><code>
+  <div id="output"><button py-click="DZ_2_1_1_SumOrMul">DZ_2_1_1_SumOrMul</button><div class="code hide"><span>Показать код</span><pre><code>
+# Пользователь вводит с клавиатуры три числа. В зависимости от выбора пользователя программа выводит 
+# на экран сумму трёх чисел или произведение трёх чисел
   numsStr = input('3 num split space')
   nums=''
   if numsStr:
@@ -73,12 +75,20 @@
     print(f"mul is {total}")
     
     
-</code></pre></div><button py-click="DZ3_4_min_max_sum">DZ3_4_min_max_sum</button><div class="code hide"><span>Показать код</span><pre><code>
+</code></pre></div><button py-click="DZ3_2_4_min_max_sum">DZ3_2_4_min_max_sum</button><div class="code hide"><span>Показать код</span><pre><code>
+# Пользователь вводит с клавиатуры числа. Программа должна подсчитывать сумму, максимум и минимум, 
+# введенных чисел. Когда пользователь вводит число 7 
+# программа прекращает свою работу и выводит на экран 
+# надпись «Good bye!»
   sum = 0
   min = None
   max = None
   while True:
-    n = int(input('Введите число'))
+    n = input('Введите число')
+    if n:
+      n = int(n)
+    else:
+      return
     if n==7:
       print('Good bye')
       break
@@ -92,8 +102,14 @@
     sum+=n
     print(f"min = {min}\nmax = {max}\nsum = {sum}")
     
-</code></pre></div><button py-click="DZ3_3_36">DZ3_3_36</button><div class="code hide"><span>Показать код</span><pre><code>
-  n = int(input('Введите число'))
+</code></pre></div><button py-click="DZ3_3_4_remove3and6">DZ3_3_4_remove3and6</button><div class="code hide"><span>Показать код</span><pre><code>
+# Пользователь вводит любое целое число. Необходимо из этого целого числа удалить все цифры 3 и 6 и 
+# вывести обратно на экран. 
+  n = input('Введите число')
+  if n:
+    n = int(n)
+  else:
+    return
   # print (''.join(''.join(nStr.split('3')).split('6')))
   tail = ''
   while n:
