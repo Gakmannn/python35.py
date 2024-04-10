@@ -1,4 +1,5 @@
 import contextlib
+# node makehtml.js
 
 with contextlib.suppress(ImportError):
   from pyscript import window
@@ -73,4 +74,15 @@ def DZ3_3_4_remove3and6(event):
       tail = str(n%10) + tail
     n//=10
   print(tail)
-    
+
+def DZ4_1_2_strings_replace(event):
+# Пользователь вводит с клавиатуры некоторый текст,
+# после чего пользователь вводит список зарезервированных
+# слов. Необходимо найти в тексте все зарезервированные
+# слова и изменить их регистр на верхний. Вывести на
+# экран измененный текст.
+  text = input('Введите текст')
+  words = input('Введите список зарезервированных слов через пробел').split()
+  for word in words:
+     text = text.replace(word, word.upper())
+  print(text)    

@@ -117,7 +117,18 @@
       tail = str(n%10) + tail
     n//=10
   print(tail)
-    
+
+</code></pre></div><button py-click="DZ4_1_2_strings_replace">DZ4_1_2_strings_replace</button><div class="code hide"><span>Показать код</span><pre><code>
+# Пользователь вводит с клавиатуры некоторый текст,
+# после чего пользователь вводит список зарезервированных
+# слов. Необходимо найти в тексте все зарезервированные
+# слова и изменить их регистр на верхний. Вывести на
+# экран измененный текст.
+  text = input('Введите текст')
+  words = input('Введите список зарезервированных слов через пробел').split()
+  for word in words:
+     text = text.replace(word, word.upper())
+  print(text)    
 </code></pre></div></div><div id="outputEnd"></div>
 <!-- <script type="py" src="./main.py"></script> -->
 <script type="py" src="./funcs.py"></script>
