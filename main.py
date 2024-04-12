@@ -535,3 +535,31 @@ listC = list(list1)
 # listObj.index(item, start, stop) который возвращает позицию элемента 
 # item при его первом появлении в списке listObj
 
+def isPalindrom(string):
+  string = string.lower()
+  reverseStr = list(string)
+  reverseStr.reverse()
+  return string == ''.join(reverseStr)
+
+def isPalindrom1(string):
+  str1 = ''
+  string = string.lower()
+  for char in string:
+    str1 = char+str1
+  return string == str1
+
+def isPalindromBest(string):
+  string = string.lower()
+  string = string.replace(' ', '')
+  l = len(string)
+  for i in range(l//2):
+    if string[i]!=string[l-1-i]:
+      return False
+  return True
+    
+print(isPalindromBest('string'))
+print(isPalindromBest('А буду я у дуба'))
+
+list1 = [1,2,3,4]
+list2 = [5,6,7,8]
+
