@@ -86,3 +86,65 @@ def DZ4_1_2_strings_replace(event):
   for word in words:
      text = text.replace(word, word.upper())
   print(text)    
+
+def DZ3_5_1_print_figure(event):
+  variant = input('Ведите вариант от "а" до "к"')
+  lenght = int(input('Ведите нечётное число'))
+  string = ''
+  for y in range(lenght):
+    for x in range(lenght):
+      match variant:  
+        case 'а':  
+          if y<=x:
+            string+=' * '
+          else:
+            string+='   '
+        case 'б':
+          if y>=x:
+            string+=' * '
+          else:
+            string+='   '
+        case 'в':
+          if y<=x and y<=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '
+        case 'г':
+          if y>=lenght-x-1 and y>=x:
+            string+=' * '
+          else:
+            string+='   '  
+        case 'д':
+          if (y>=lenght-x-1 and y>=x) or (y<=x and y<=lenght-x-1):
+            string+=' * '
+          else:
+            string+='   '    
+        case 'е':
+          if (y>=x and y<=lenght-x-1) or (y<=x and y>=lenght-x-1):
+            string+=' * '
+          else:
+            string+='   '  
+        case 'ж':
+          if y>=x and y<=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '
+        case 'з':
+          if y<=x and y>=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '  
+        case 'и':
+          if y<=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '
+        case 'к':
+          if y>=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   ' 
+        case _:
+          pass
+    string += '\n'
+  print(string)

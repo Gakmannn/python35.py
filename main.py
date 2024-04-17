@@ -563,3 +563,139 @@ print(isPalindromBest('А буду я у дуба'))
 list1 = [1,2,3,4]
 list2 = [5,6,7,8]
 
+
+# https://pythonworld.ru/tipy-dannyx-v-python/vse-o-funkciyax-i-ix-argumentax.html
+
+def myFunc(name, *args, **kvargs):
+  print('hello '+ name)
+  return 'hello '+ name
+  
+  
+print('func return ',myFunc('student', 1, 2, 3))
+
+def newfunc(n:int)->int:
+    def myfunc(x):
+        return n + x
+    return myfunc
+  
+addTo4 = newfunc(4)
+print(addTo4)
+print(addTo4(2))
+print(newfunc(4)(5))
+print(newfunc('hello ')('world'))
+
+def func1():
+  pass
+
+def func2():
+  func1()
+
+def func(a, b, c=2, *args): # c - необязательный аргумент
+  return a + b + c + sum(args)
+
+print(func(1,2))
+print(func(1,2,3))
+print(func(b=6,a=0))
+# print(func(1,a=2))
+print(func(1,2,3,4,5,6,7,8))
+
+def func(*args,**kwargs):
+    print(args)
+    print(kwargs)
+
+func (a=1,b=2)
+func (1,2)
+func (1,2,a=1,b=2)
+
+print((lambda x, y: x + y)(1, 2))
+func = lambda x, y: x + y
+print (func(5,9))
+
+def map(list:list, func):
+  for i in range(len(list)):
+    list[i] = func(list[i], i)
+  return list
+    
+print(map([1,2,3,4,5], lambda el, i: el+1))
+print(map([1,2,3,4,5], lambda el, i: el+i))
+
+
+def someFunc():
+  def sum(a,b):
+    pass
+  print(sum(1,2))
+  
+someFunc()
+
+def factorial(n:int)->int:
+  if n == 1:
+    return n
+  return n*factorial(n-1)
+
+# 5!
+# 1*2*3*4*5
+
+print(factorial(5))
+
+def printFugure()->None:
+  variant = input('Ведите вариант от "а" до "к"')
+  lenght = int(input('Ведите нечётное число'))
+  string = ''
+  for y in range(lenght):
+    for x in range(lenght):
+      match variant:  
+        case 'а':  
+          if y<=x:
+            string+=' * '
+          else:
+            string+='   '
+        case 'б':
+          if y>=x:
+            string+=' * '
+          else:
+            string+='   '
+        case 'в':
+          if y<=x and y<=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '
+        case 'г':
+          if y>=lenght-x-1 and y>=x:
+            string+=' * '
+          else:
+            string+='   '  
+        case 'д':
+          if (y>=lenght-x-1 and y>=x) or (y<=x and y<=lenght-x-1):
+            string+=' * '
+          else:
+            string+='   '    
+        case 'е':
+          if (y>=x and y<=lenght-x-1) or (y<=x and y>=lenght-x-1):
+            string+=' * '
+          else:
+            string+='   '  
+        case 'ж':
+          if y>=x and y<=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '
+        case 'з':
+          if y<=x and y>=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '  
+        case 'и':
+          if y<=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '
+        case 'к':
+          if y>=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   ' 
+        case _:
+          pass
+    string += '\n'
+  print(string)
+    
