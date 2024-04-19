@@ -187,3 +187,40 @@ def DZ5_1_3_print_square(event):
   z = bool(int(input('Закрашивать? (0,1)')))
   printSquere(l, s, z)  
   
+def DZ5_1_3_print_square1(event):
+# Напишите функцию, которая отображает пустой или
+# заполненный квадрат из некоторого символа. Функция
+# принимает в качестве параметров: длину стороны ква-
+# драта, символ и переменную логического типа:
+# ■ если она равна True, квадрат заполненный;
+# ■ если False, квадрат пустой.
+  def printSquere(lenght:int, simbol:str, fill:bool)->None:
+    l = lenght+2
+    s = ''
+    for x in range(l):
+      for y in range(l):
+        if x==0 or x==l-1:
+          if y==0:
+            s+= ' -'
+          elif y==l-1:
+            s+= ''
+          else:
+            s+= '--'
+        else:
+          if y==0 or y==l-1:
+            if y==0:  
+              s+= '|'
+            if y==l-1:
+              s+= ' |'
+          else:
+            if fill:        
+              s+= ' '+simbol
+            else:
+              s+= '  '
+      s+='\n'
+    print(s)
+  
+  l = int(input('Введите сторону квадрата'))
+  s = input('Введите символ')
+  z = bool(int(input('Закрашивать? (0,1)')))
+  printSquere(l, s, z)  
