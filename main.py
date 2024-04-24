@@ -1,6 +1,7 @@
 import contextlib
 import string
 import random
+import operator
 import re
 
 with contextlib.suppress(ImportError):
@@ -750,6 +751,7 @@ def DZ5_3_5_bulls_and_cows():
   # необходимо использовать рекурсию.
   num = ''.join(random.sample(string.digits, 4))
   count = 0
+  print(num)
   def recurcive(num, count):
     count+=1
     userNum = input('Угадай число: ')
@@ -772,4 +774,227 @@ def DZ5_3_5_bulls_and_cows():
       print('Congrats! I\'s takes ' + str(count) + ' trys')
   recurcive(num, count)
   
-DZ5_3_5_bulls_and_cows()
+# DZ5_3_5_bulls_and_cows()
+
+
+# !Основные моменты
+# ?1. Список — это тип данных в Python, используемый для хранения нескольких объектов. Это упорядоченная и изменяемая коллекция разделенных запятыми элементов в квадратных скобках, например:
+myList = [1, None, True, "I am a string", 256, 0]
+
+# ?2. Списки могут быть проиндексированы и обновлены, например:
+myList = [1, None, True, 'I am a string', 256, 0]
+print(myList[3]) # выводит: I am a string
+print(myList[-1]) # выводит: 0 
+myList[1] = '?' 
+print(myList) # выводит: [1, '?', True, 'I am a string', 256, 0] 
+myList.insert(0, "first") 
+myList.append("last") 
+print(myList) # выводит: ['first', 1, '?', True, 'I am a string', 256, 0, 'last']
+
+# ?3. Списки могут быть вложенными, например: 
+myList = [1, 'a', ["list", 64, [0, 1], False]]
+
+# ?4. Элементы списка и списки могут быть удалены, например:
+myList = [1, 2, 3, 4] 
+del myList[2] 
+print(myList) # выводит: [1, 2, 4] 
+del myList # удаляет весь список
+
+# ?5. Списки можно перебирать, используя цикл for, например:
+myList = ["white", "purple", "blue", "yellow", "green"]
+for color in myList: 
+ print(color)
+
+# ?6. Функция len() может использоваться для проверки длины списка, например:
+myList = ["white", "purple", "blue", "yellow", "green"]
+print(len(myList)) # выводит 5 
+del myList[2] 
+print(len(myList)) # выводит 4
+
+# ?7. Типичный вызов функции выглядит следующим образом: 
+# result = function(arg), а типичный вызов метода 
+# выглядит так: result = data.method(arg).
+
+var1 = 1 
+var2 = 2 
+print(var1, var2)
+var1, var2 = var2, var1
+print(var1, var2)
+
+
+myList = [10, 1, 8, 3, 5] 
+myList[0], myList[4] = myList[4], myList[0] 
+myList[1], myList[3] = myList[3], myList[1] 
+print(myList)
+
+print(sorted("This is a test string from Andrew".split(), key=str.casefold))
+print(sorted("This is a test string from Andrew".split()))
+myArr = "This is a test string from Andrew".split()
+myArr.sort(key=str.casefold)
+print(myArr)
+myArr.sort()
+print(myArr)
+
+myList = [999999.5,8, 10, 6, 2, 4,12,54,23,5,123,35,4,631265,45643,21,35,6] # список для сортировки 
+
+# Сортировка пузырьком
+
+swapped = True # небольшое жульничество – 
+# нам необходимо ввести цикл while
+numStartFromBegin = 0
+numSwapped = 0
+while swapped: 
+  numStartFromBegin += 1
+  swapped = False # никакого обмена местами
+  for i in range(len(myList) - 1):
+    if myList[i] > myList[i + 1]: 
+      numSwapped += 1
+      swapped = True # произошёл обмен местами! 
+      myList[i], myList[i + 1] = myList[i + 1], myList[i] 
+print(myList, numStartFromBegin, numSwapped, len(myList))
+
+myList.sort(reverse=False)
+print(myList)
+
+# Бинарный поиск
+
+a = myList
+value = 35
+left = 0
+right = len(a) - 1
+
+while left <= right:
+    center = (left + right) // 2
+    if value == a[center]:
+        print('ID =', center)
+        break
+    if value > a[center]:
+        left = center + 1
+    else:
+        right = center - 1
+else:
+    print('No value')
+
+
+# Метод вставок
+
+def insertion_sort(array):
+    n = len(array)
+    for i in range(1, n):
+        x = array[i]
+        j = i
+
+        while j > 0 and array[j - 1] > x:
+            array[j] = array[j - 1]
+            j -= 1
+
+        array[j] = x
+
+    return array
+
+
+# insertion_sort([6, 5, 3, 8, 9, 1]) # [1, 3, 5, 6, 8, 9]
+
+
+
+def merge_sort(L):
+  if len(L) < 2:
+      return L[:]
+  else:
+      middle = int(len(L) / 2)
+      left = merge_sort(L[:middle])
+      right = merge_sort(L[middle:])
+      return merge(left, right)
+      
+def merge(left, right):
+  result = []
+  i, j = 0, 0
+  while i < len(left) and j < len(right):
+      if left[i] < right[j]:
+          result.append(left[i])
+          i += 1
+      else:
+          result.append(right[j])
+          j += 1
+  while i < len(left):
+      result.append(left[i])
+      i += 1
+  while j < len(right):
+      result.append(right[j])
+      j += 1
+  return result
+
+print(merge_sort([6, 5, 3, 8, 9, 1])) # [1, 3, 5, 6, 8, 9]
+
+def shell(list):
+    n = len(list)
+    d = n // 2
+    while d > 0:
+        for i in range(d, n):
+            j = i
+            t = list[i]
+            while j >= d and list[j - d] > t:
+                list[j] = list[j - d]
+                j -= d
+            list[j] = t
+        d //= 2
+    return list
+  
+print(shell([6, 5, 3, 8, 9, 1])) # [1, 3, 5, 6, 8, 9]
+
+
+def heapify(nums, heap_size, root_index):  
+    # Индекс наибольшего элемента считается корневым индексом
+    largest = root_index
+    left_child = (2 * root_index) + 1
+    right_child = (2 * root_index) + 2
+
+    # Если левый потомок корня — это допустимый индекс, а элемент больше,
+    # чем текущий наибольший, то мы обновляем наибольший элемент
+    if left_child < heap_size and nums[left_child] > nums[largest]:
+      largest = left_child
+
+    # То же самое и для правого потомка корня
+    if right_child < heap_size and nums[right_child] > nums[largest]:
+      largest = right_child
+
+    # Если наибольший элемент уже не корневой, они меняются местами
+    if largest != root_index:
+      nums[root_index], nums[largest] = nums[largest], nums[root_index]
+      heapify(nums, heap_size, largest)
+
+def heap_sort(nums):  
+    n = len(nums)
+
+    # Создаём Max Heap из списка
+    # 2-й аргумент означает остановку алгоритма перед элементом -1, то есть
+    # перед первым элементом списка
+    # 3-й аргумент означает повторный проход по списку в обратном направлении, 
+    # уменьшая счётчик i на 1 
+    for i in range(n, -1, -1):
+        heapify(nums, n, i)
+
+    # Перемещаем корень Max Heap в самый конец списка
+    for i in range(n - 1, 0, -1):
+        nums[i], nums[0] = nums[0], nums[i]
+        heapify(nums, i, 0)
+
+# Проверяем, что всё работает
+random_list_of_nums = [35, 12, 43, 8, 51]  
+heap_sort(random_list_of_nums)  
+print(random_list_of_nums)
+
+# https://habr.com/ru/articles/188010/
+# https://habr.com/ru/articles/782608/
+
+
+def quicksort(nums):
+   if len(nums) <= 1:
+       return nums
+   else:
+       q = random.choice(nums)
+   l_nums = [n for n in nums if n < q]
+ 
+   e_nums = [q] * nums.count(q)
+   b_nums = [n for n in nums if n > q]
+   return quicksort(l_nums) + e_nums + quicksort(b_nums)

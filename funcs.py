@@ -1,4 +1,6 @@
 import contextlib
+import string
+import random
 # node makehtml.js
 
 with contextlib.suppress(ImportError):
@@ -224,3 +226,37 @@ def DZ5_1_3_print_square1(event):
   s = input('Введите символ')
   z = bool(int(input('Закрашивать? (0,1)')))
   printSquere(l, s, z)  
+
+def DZ5_3_5_bulls_and_cows(event):
+  # Написать игру «Быки и коровы». Программа «за-
+  # гадывает» четырёхзначное число и играющий должен
+  # угадать его. После ввода пользователем числа программа
+  # сообщает, сколько цифр числа угадано (быки) и сколько
+  # цифр угадано и стоит на нужном месте (коровы). После
+  # отгадывания числа на экран необходимо вывести коли-
+  # чество сделанных пользователем попыток. В программе
+  # необходимо использовать рекурсию.
+  num = ''.join(random.sample(string.digits, 4))
+  count = 0
+  # print(num)
+  def recurcive(num, count):
+    count+=1
+    userNum = input('Угадай число: ')
+    cows = 0
+    bulls = 0
+    newUserNum = ''
+    for n in userNum:
+      if n not in newUserNum:
+        newUserNum += n
+    for n in newUserNum:
+      if (n in num):
+        bulls+=1
+    for i in range(4):
+      if num[i]==userNum[i]:
+        cows+=1
+    if userNum != num:
+      print('Bulls: '+str(bulls)+'. Cows: '+ str(cows))
+      recurcive(num, count)
+    else:
+      print('Congrats! I\'s takes ' + str(count) + ' trys')
+  recurcive(num, count)
