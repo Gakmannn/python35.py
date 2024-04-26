@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,33 +14,44 @@
       text-decoration: none;
       background: wheat;
     }
+
     .code span {
       display: none;
     }
+
     .code pre {
       display: block;
     }
-    .hide span{
+
+    .hide span {
       display: inline-block;
       margin: 13px 0;
     }
-    .hide pre{
+
+    .hide pre {
       display: none;
     }
-    #output {
-      margin: 20px 0 0 30px;
+
+    .flex {
+      display: flex;
+      justify-content: space-between;
     }
-    </style>
+
+    #output {
+      margin: 10px;
+    }
+  </style>
   <script type="module" src="./pyscript/core.js"></script>
   <!-- <script type="module" src="./pyodide/pyodide.mjs"></script> -->
   <link rel="stylesheet" href="./pyscript/core.css">
   <script src="./mini-coi.js" scope="./"></script>
 </head>
+
 <body>
   <mpy-config>
     interpreter = "pyodide/pyodide.mjs"
   </mpy-config>
-  
+
   <div style="display: flex;">
     <a href="https://disk.yandex.ru/d/rvxmhiSIhDSMCA">Материалы</a>
     <a href="https://disk.yandex.ru/d/LADtnZajP19xeQ">Полный курс HTML</a>
@@ -50,7 +62,7 @@
     <a href="https://overapi.com/javascript">Шпоры 3</a>
     <a href="https://quickref.me/javascript">Шпоры 4</a>
   </div>
-  <div id="output"><button py-click="DZ_2_1_1_SumOrMul">DZ_2_1_1_SumOrMul</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит с клавиатуры три числа. В зависимости от выбора пользователя программа выводит 
+  <div id="output"><div class="flex"><div><h2>Домашние задания</h2><button py-click="DZ_2_1_1_SumOrMul">DZ_2_1_1_SumOrMul</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит с клавиатуры три числа. В зависимости от выбора пользователя программа выводит 
 # на экран сумму трёх чисел или произведение трёх чисел
   numsStr = input('3 num split space')
   nums=''
@@ -74,7 +86,7 @@
     print(f"mul is {total}")
     
     
-</code></pre></div><button py-click="DZ3_2_4_min_max_sum">DZ3_2_4_min_max_sum</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит с клавиатуры числа. Программа должна подсчитывать сумму, максимум и минимум, 
+</code></pre></div><button py-click="DZ_3_2_4_min_max_sum">DZ_3_2_4_min_max_sum</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит с клавиатуры числа. Программа должна подсчитывать сумму, максимум и минимум, 
 # введенных чисел. Когда пользователь вводит число 7 
 # программа прекращает свою работу и выводит на экран 
 # надпись «Good bye!»
@@ -93,14 +105,14 @@
     if min==None and max==None:
       min = n
       max = n
-    if n>max:
+    if n&gt;max:
       max = n
-    if n<min:
+    if n&lt;min:
       min = n
     sum+=n
     print(f"min = {min}\nmax = {max}\nsum = {sum}")
     
-</code></pre></div><button py-click="DZ3_3_4_remove3and6">DZ3_3_4_remove3and6</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит любое целое число. Необходимо из этого целого числа удалить все цифры 3 и 6 и 
+</code></pre></div><button py-click="DZ_3_3_4_remove3and6">DZ_3_3_4_remove3and6</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит любое целое число. Необходимо из этого целого числа удалить все цифры 3 и 6 и 
 # вывести обратно на экран. 
   n = input('Введите число')
   if n:
@@ -115,7 +127,68 @@
     n//=10
   print(tail)
 
-</code></pre></div><button py-click="DZ4_1_2_strings_replace">DZ4_1_2_strings_replace</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит с клавиатуры некоторый текст,
+</code></pre></div><button py-click="DZ_3_5_1_print_figure">DZ_3_5_1_print_figure</button><div class="code hide"><span>Показать код</span><pre><code>  variant = input('Ведите вариант от "а" до "к"')
+  lenght = int(input('Ведите нечётное число'))
+  string = ''
+  for y in range(lenght):
+    for x in range(lenght):
+      match variant:  
+        case 'а':  
+          if y&lt;=x:
+            string+=' * '
+          else:
+            string+='   '
+        case 'б':
+          if y&gt;=x:
+            string+=' * '
+          else:
+            string+='   '
+        case 'в':
+          if y&lt;=x and y&lt;=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '
+        case 'г':
+          if y&gt;=lenght-x-1 and y&gt;=x:
+            string+=' * '
+          else:
+            string+='   '  
+        case 'д':
+          if (y&gt;=lenght-x-1 and y&gt;=x) or (y&lt;=x and y&lt;=lenght-x-1):
+            string+=' * '
+          else:
+            string+='   '    
+        case 'е':
+          if (y&gt;=x and y&lt;=lenght-x-1) or (y&lt;=x and y&gt;=lenght-x-1):
+            string+=' * '
+          else:
+            string+='   '  
+        case 'ж':
+          if y&gt;=x and y&lt;=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '
+        case 'з':
+          if y&lt;=x and y&gt;=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '  
+        case 'и':
+          if y&lt;=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   '
+        case 'к':
+          if y&gt;=lenght-x-1:
+            string+=' * '
+          else:
+            string+='   ' 
+        case _:
+          pass
+    string += '\n'
+  print(string)
+  
+</code></pre></div><button py-click="DZ_4_1_2_strings_replace">DZ_4_1_2_strings_replace</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит с клавиатуры некоторый текст,
 # после чего пользователь вводит список зарезервированных
 # слов. Необходимо найти в тексте все зарезервированные
 # слова и изменить их регистр на верхний. Вывести на
@@ -126,74 +199,13 @@
      text = text.replace(word, word.upper())
   print(text)    
 
-</code></pre></div><button py-click="DZ3_5_1_print_figure">DZ3_5_1_print_figure</button><div class="code hide"><span>Показать код</span><pre><code>  variant = input('Ведите вариант от "а" до "к"')
-  lenght = int(input('Ведите нечётное число'))
-  string = ''
-  for y in range(lenght):
-    for x in range(lenght):
-      match variant:  
-        case 'а':  
-          if y<=x:
-            string+=' * '
-          else:
-            string+='   '
-        case 'б':
-          if y>=x:
-            string+=' * '
-          else:
-            string+='   '
-        case 'в':
-          if y<=x and y<=lenght-x-1:
-            string+=' * '
-          else:
-            string+='   '
-        case 'г':
-          if y>=lenght-x-1 and y>=x:
-            string+=' * '
-          else:
-            string+='   '  
-        case 'д':
-          if (y>=lenght-x-1 and y>=x) or (y<=x and y<=lenght-x-1):
-            string+=' * '
-          else:
-            string+='   '    
-        case 'е':
-          if (y>=x and y<=lenght-x-1) or (y<=x and y>=lenght-x-1):
-            string+=' * '
-          else:
-            string+='   '  
-        case 'ж':
-          if y>=x and y<=lenght-x-1:
-            string+=' * '
-          else:
-            string+='   '
-        case 'з':
-          if y<=x and y>=lenght-x-1:
-            string+=' * '
-          else:
-            string+='   '  
-        case 'и':
-          if y<=lenght-x-1:
-            string+=' * '
-          else:
-            string+='   '
-        case 'к':
-          if y>=lenght-x-1:
-            string+=' * '
-          else:
-            string+='   ' 
-        case _:
-          pass
-    string += '\n'
-  print(string)
-  
-</code></pre></div><button py-click="DZ5_1_3_print_square">DZ5_1_3_print_square</button><div class="code hide"><span>Показать код</span><pre><code># Напишите функцию, которая отображает пустой или
+</code></pre></div><button py-click="DZ_5_1_3_print_square">DZ_5_1_3_print_square</button><div class="code hide"><span>Показать код</span><pre><code># Напишите функцию, которая отображает пустой или
 # заполненный квадрат из некоторого символа. Функция
 # принимает в качестве параметров: длину стороны ква-
 # драта, символ и переменную логического типа:
 # ■ если она равна True, квадрат заполненный;
 # ■ если False, квадрат пустой.
-  def printSquere(lenght:int, simbol:str, fill:bool)->None:
+  def printSquere(lenght:int, simbol:str, fill:bool)-&gt;None:
     l = lenght+2
     s = ''
     for x in range(l):
@@ -224,44 +236,7 @@
   z = bool(int(input('Закрашивать? (0,1)')))
   printSquere(l, s, z)  
   
-</code></pre></div><button py-click="DZ5_1_3_print_square1">DZ5_1_3_print_square1</button><div class="code hide"><span>Показать код</span><pre><code># Напишите функцию, которая отображает пустой или
-# заполненный квадрат из некоторого символа. Функция
-# принимает в качестве параметров: длину стороны ква-
-# драта, символ и переменную логического типа:
-# ■ если она равна True, квадрат заполненный;
-# ■ если False, квадрат пустой.
-  def printSquere(lenght:int, simbol:str, fill:bool)->None:
-    l = lenght+2
-    s = ''
-    for x in range(l):
-      for y in range(l):
-        if x==0 or x==l-1:
-          if y==0:
-            s+= ' -'
-          elif y==l-1:
-            s+= ''
-          else:
-            s+= '--'
-        else:
-          if y==0 or y==l-1:
-            if y==0:  
-              s+= '|'
-            if y==l-1:
-              s+= ' |'
-          else:
-            if fill:        
-              s+= ' '+simbol
-            else:
-              s+= '  '
-      s+='\n'
-    print(s)
-  
-  l = int(input('Введите сторону квадрата'))
-  s = input('Введите символ')
-  z = bool(int(input('Закрашивать? (0,1)')))
-  printSquere(l, s, z)  
-
-</code></pre></div><button py-click="DZ5_3_5_bulls_and_cows">DZ5_3_5_bulls_and_cows</button><div class="code hide"><span>Показать код</span><pre><code>  # Написать игру «Быки и коровы». Программа «за-
+</code></pre></div><button py-click="DZ_5_3_5_bulls_and_cows">DZ_5_3_5_bulls_and_cows</button><div class="code hide"><span>Показать код</span><pre><code>  # Написать игру «Быки и коровы». Программа «за-
   # гадывает» четырёхзначное число и играющий должен
   # угадать его. После ввода пользователем числа программа
   # сообщает, сколько цифр числа угадано (быки) и сколько
@@ -293,16 +268,92 @@
     else:
       print('Congrats! I\'s takes ' + str(count) + ' trys')
   recurcive(num, count)
-</code></pre></div></div><div id="outputEnd"></div>
-<!-- <script type="py" src="./main.py"></script> -->
-<script type="py" src="./funcs.py"></script>
-<script>
-  document.addEventListener('click', (e)=>{
-    const parent = e.target.closest('.code')
-    if (parent) {
-      parent.classList.toggle('hide')
-    }
-  })
-</script>
+
+</code></pre></div></div><div><h2>Практические задания</h2><button py-click="PZ_5_3_5_bulls_and_cows">PZ_5_3_5_bulls_and_cows</button><div class="code hide"><span>Показать код</span><pre><code># Напишите функцию, которая отображает пустой или
+# заполненный квадрат из некоторого символа. Функция
+# принимает в качестве параметров: длину стороны ква-
+# драта, символ и переменную логического типа:
+# ■ если она равна True, квадрат заполненный;
+# ■ если False, квадрат пустой.
+  def printSquere(lenght:int, simbol:str, fill:bool)-&gt;None:
+    l = lenght+2
+    s = ''
+    for x in range(l):
+      for y in range(l):
+        if x==0 or x==l-1:
+          if y==0:
+            s+= ' -'
+          elif y==l-1:
+            s+= ''
+          else:
+            s+= '--'
+        else:
+          if y==0 or y==l-1:
+            if y==0:  
+              s+= '|'
+            if y==l-1:
+              s+= ' |'
+          else:
+            if fill:        
+              s+= ' '+simbol
+            else:
+              s+= '  '
+      s+='\n'
+    print(s)
+  
+  l = int(input('Введите сторону квадрата'))
+  s = input('Введите символ')
+  z = bool(int(input('Закрашивать? (0,1)')))
+  printSquere(l, s, z)  
+  
+</code></pre></div></div><div><h2>Остальные задания</h2><button py-click="print_square">print_square</button><div class="code hide"><span>Показать код</span><pre><code># Напишите функцию, которая отображает пустой или
+# заполненный квадрат из некоторого символа. Функция
+# принимает в качестве параметров: длину стороны ква-
+# драта, символ и переменную логического типа:
+# ■ если она равна True, квадрат заполненный;
+# ■ если False, квадрат пустой.
+  def printSquere(lenght:int, simbol:str, fill:bool)-&gt;None:
+    l = lenght+2
+    s = ''
+    for x in range(l):
+      for y in range(l):
+        if x==0 or x==l-1:
+          if y==0:
+            s+= ' -'
+          elif y==l-1:
+            s+= ''
+          else:
+            s+= '--'
+        else:
+          if y==0 or y==l-1:
+            if y==0:  
+              s+= '|'
+            if y==l-1:
+              s+= ' |'
+          else:
+            if fill:        
+              s+= ' '+simbol
+            else:
+              s+= '  '
+      s+='\n'
+    print(s)
+  
+  l = int(input('Введите сторону квадрата'))
+  s = input('Введите символ')
+  z = bool(int(input('Закрашивать? (0,1)')))
+  printSquere(l, s, z)  
+  
+</code></pre></div></div></div></div><div id="outputEnd"></div>
+  <!-- <script type="py" src="./main.py"></script> -->
+  <script type="py" src="./funcs.py"></script>
+  <script>
+    document.addEventListener('click', (e) => {
+      const parent = e.target.closest('.code')
+      if (parent) {
+        parent.classList.toggle('hide')
+      }
+    })
+  </script>
 </body>
+
 </html>

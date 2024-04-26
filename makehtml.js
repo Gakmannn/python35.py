@@ -1,33 +1,74 @@
+const { log } = require('console')
 let fs = require('fs')
 let html = fs.readFileSync('index.html', 'utf8')
 let python = fs.readFileSync('funcs.py', 'utf8')
+
+const types = {
+  DZ: [],
+  PZ: [],
+  else: []
+}
+
+const now = { name: '', sortName: '', funcBody: '', type: '', module: ''}
 
 let pyArr = python.split('\n')
 let name = ''
 let funcBody = ''
 let first = true
-let pyToJs = ''
+let pyToJs = '<div class="flex">'
 for (let string of pyArr) {
   if (string) {
     if (string.startsWith('def')) {
       if (first) {
         first = false
       } else {
-        const code = `<pre><code>${funcBody}</code></pre>`
-        pyToJs += `<div class="code hide"><span>Показать код</span>${code}</div>`
+        // const code = `<pre><code>${funcBody}</code></pre>`
+        // pyToJs += `<div class="code hide"><span>Показать код</span>${code}</div>`
+        now.funcBody = funcBody
+        if (now.type in types) {
+          types[now.type].push({ ...now })
+        } else {
+          types.else.push({ ...now })
+        }
       }
       funcBody = ''
       name = string.split(' ')[1].split('(')[0]
-      const button = `<button py-click="${name}">${name}</button>`
-      pyToJs += `${button}`
+
+      now.name = name
+      now.type = name.split('_')[0]
+      now.sortName = name.split('_').slice(0, 4).join('')
+      now.module = name.split('_')[1]
+
+      // const button = `<button py-click="${name}">${name}</button>`
+      // pyToJs += `${button}`
     } else {
       if (string) funcBody += string + '\n'
     }
   }
 
 }
-const code = `<pre><code>${funcBody}</code></pre>`
-pyToJs += `<div class="code hide"><span>Показать код</span>${code}</div>`
+// const code = `<pre><code>${funcBody}</code></pre>`
+// pyToJs += `<div class="code hide"><span>Показать код</span>${code}</div>`
+// now.funcBody = funcBody
+if (now.type in types) {
+  types[now.type].push({ ...now })
+} else {
+  types.else.push({ ...now })
+}
+
+for (let type in types) {
+  types[type].sort((a, b) => a.sortName.localeCompare(b.sortName))
+  if (types[type].length) {
+    const name = type == 'DZ' ? 'Домашние задания' : type == 'PZ' ? 'Практические задания' : 'Остальные задания'
+    pyToJs += `<div><h2>${name}</h2>`
+    for (el of types[type]) {
+      const button = `<button py-click="${el.name}">${el.name}</button>`
+      const code = `<pre><code>${el.funcBody.replaceAll('>', '&gt;').replaceAll('<', '&lt;') }</code></pre>`
+      pyToJs += `${button}<div class="code hide"><span>Показать код</span>${code}</div>`
+    }
+    pyToJs += '</div>'
+  }  
+}
 
 // const pythonArr = python.split('def ')
 // let pyToJs = ''
@@ -41,6 +82,7 @@ pyToJs += `<div class="code hide"><span>Показать код</span>${code}</d
 //   pyToJs += `${button}<div class="code hide"><span>Показать код</span>${code}</div>`
 // }
 
+pyToJs += '</div>' // flex
 const htmlStart = html.split('<div id="output">')[0] + '<div id="output">'
 const htmlEnd = '</div><div id="outputEnd">'+html.split('<div id="outputEnd">')[1]
 

@@ -3,6 +3,7 @@ import string
 import random
 import operator
 import re
+import time
 
 with contextlib.suppress(ImportError):
     from pyscript import window
@@ -838,20 +839,20 @@ print(myArr)
 myList = [999999.5,8, 10, 6, 2, 4,12,54,23,5,123,35,4,631265,45643,21,35,6] # список для сортировки 
 
 # Сортировка пузырьком
-
-swapped = True # небольшое жульничество – 
-# нам необходимо ввести цикл while
-numStartFromBegin = 0
-numSwapped = 0
-while swapped: 
-  numStartFromBegin += 1
-  swapped = False # никакого обмена местами
-  for i in range(len(myList) - 1):
-    if myList[i] > myList[i + 1]: 
-      numSwapped += 1
-      swapped = True # произошёл обмен местами! 
-      myList[i], myList[i + 1] = myList[i + 1], myList[i] 
-print(myList, numStartFromBegin, numSwapped, len(myList))
+def bubble(myList):
+  swapped = True # небольшое жульничество – 
+  # нам необходимо ввести цикл while
+  numStartFromBegin = 0
+  numSwapped = 0
+  while swapped: 
+    numStartFromBegin += 1
+    swapped = False # никакого обмена местами
+    for i in range(len(myList) - 1):
+      if myList[i] > myList[i + 1]: 
+        numSwapped += 1
+        swapped = True # произошёл обмен местами! 
+        myList[i], myList[i + 1] = myList[i + 1], myList[i] 
+  # print(myList, numStartFromBegin, numSwapped, len(myList))
 
 myList.sort(reverse=False)
 print(myList)
@@ -989,12 +990,83 @@ print(random_list_of_nums)
 
 
 def quicksort(nums):
-   if len(nums) <= 1:
-       return nums
-   else:
-       q = random.choice(nums)
-   l_nums = [n for n in nums if n < q]
- 
-   e_nums = [q] * nums.count(q)
-   b_nums = [n for n in nums if n > q]
-   return quicksort(l_nums) + e_nums + quicksort(b_nums)
+  if len(nums) <= 1:
+    return nums
+  else:
+    q = random.choice(nums)
+  l_nums = [n for n in nums if n < q]
+  e_nums = [q] * nums.count(q)
+  b_nums = [n for n in nums if n > q]
+  return quicksort(l_nums) + e_nums + quicksort(b_nums)
+
+random_list_of_nums = [35, 12,12, 43,8, 8, 51]  
+quicksort(random_list_of_nums)  
+print(random_list_of_nums)
+
+# sortTime = 0
+# insertionTime = 0
+# mergeTime = 0
+# shellTime = 0
+# heapTime = 0 
+# quickTime = 0
+# mainStart = time.time()
+# for i in range(100):
+#   A = [random.randint(1, 10000) for i in range(10000)]
+
+#   a1 = A[:]
+#   start = time.time()
+#   a1.sort()
+#   end = time. time()
+#   sortTime += end-start
+
+#   # a2 = A[:]
+#   # start = time.time()
+#   # bubble(a2)
+#   # end = time. time()
+
+#   # print ('bubble', end-start)
+
+#   a3 = A[:]
+#   start = time.time()
+#   insertion_sort(a3)
+#   end = time. time()
+
+#   insertionTime += end-start
+
+#   a4 = A[:]
+#   start = time.time()
+#   merge_sort(a4)
+#   end = time. time()
+
+#   mergeTime += end-start
+
+#   a5 = A[:]
+#   start = time.time()
+#   shell(a5)
+#   end = time. time()
+
+#   shellTime += end-start
+
+#   a6 = A[:]
+#   start = time.time()
+#   heap_sort(a6)
+#   end = time. time()
+
+#   heapTime += end-start
+
+#   a7 = A[:]
+#   start = time.time()
+#   quicksort(a7)
+#   end = time. time()
+  
+#   quickTime += end-start
+  
+#   print(i)
+
+# print ('sort', sortTime/1000)
+# print ('insertion_sort', insertionTime/1000)
+# print ('merge_sort', mergeTime/1000)
+# print ('shell', shellTime/1000)
+# print ('heap_sort', heapTime/1000)
+# print ('quicksort', quickTime/1000)
+# print ('all', time.time()-mainStart)
