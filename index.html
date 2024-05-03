@@ -19,6 +19,23 @@
       display: none;
     }
 
+    .close {
+      overflow: hidden;
+      height: 25px;
+      transition: 1s
+    }
+    .module {
+      background-color: rgb(239, 232, 223);
+      user-select: none;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 10px 0 25px;
+    }
+    .module p {
+      display: inline-block;
+      margin: 5px 0 15px 20px;
+    }
+
     .code pre {
       display: block;
     }
@@ -86,7 +103,7 @@
     print(f"mul is {total}")
     
     
-</code></pre></div><button py-click="DZ_3_2_4_min_max_sum">DZ_3_2_4_min_max_sum</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит с клавиатуры числа. Программа должна подсчитывать сумму, максимум и минимум, 
+</code></pre></div><div class="module close">Модуль 3<p>Открыть</p><br><button py-click="DZ_3_2_4_min_max_sum">DZ_3_2_4_min_max_sum</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит с клавиатуры числа. Программа должна подсчитывать сумму, максимум и минимум, 
 # введенных чисел. Когда пользователь вводит число 7 
 # программа прекращает свою работу и выводит на экран 
 # надпись «Good bye!»
@@ -188,7 +205,7 @@
     string += '\n'
   print(string)
   
-</code></pre></div><button py-click="DZ_4_1_2_strings_replace">DZ_4_1_2_strings_replace</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит с клавиатуры некоторый текст,
+</code></pre></div></div><button py-click="DZ_4_1_2_strings_replace">DZ_4_1_2_strings_replace</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит с клавиатуры некоторый текст,
 # после чего пользователь вводит список зарезервированных
 # слов. Необходимо найти в тексте все зарезервированные
 # слова и изменить их регистр на верхний. Вывести на
@@ -199,7 +216,7 @@
      text = text.replace(word, word.upper())
   print(text)    
 
-</code></pre></div><button py-click="DZ_5_1_3_print_square">DZ_5_1_3_print_square</button><div class="code hide"><span>Показать код</span><pre><code># Напишите функцию, которая отображает пустой или
+</code></pre></div><div class="module close">Модуль 5<p>Открыть</p><br><button py-click="DZ_5_1_3_print_square">DZ_5_1_3_print_square</button><div class="code hide"><span>Показать код</span><pre><code># Напишите функцию, которая отображает пустой или
 # заполненный квадрат из некоторого символа. Функция
 # принимает в качестве параметров: длину стороны ква-
 # драта, символ и переменную логического типа:
@@ -269,43 +286,38 @@
       print('Congrats! I\'s takes ' + str(count) + ' trys')
   recurcive(num, count)
 
-</code></pre></div></div><div><h2>Практические задания</h2><button py-click="PZ_5_3_5_bulls_and_cows">PZ_5_3_5_bulls_and_cows</button><div class="code hide"><span>Показать код</span><pre><code># Напишите функцию, которая отображает пустой или
-# заполненный квадрат из некоторого символа. Функция
-# принимает в качестве параметров: длину стороны ква-
-# драта, символ и переменную логического типа:
-# ■ если она равна True, квадрат заполненный;
-# ■ если False, квадрат пустой.
-  def printSquere(lenght:int, simbol:str, fill:bool)-&gt;None:
-    l = lenght+2
-    s = ''
-    for x in range(l):
-      for y in range(l):
-        if x==0 or x==l-1:
-          if y==0:
-            s+= ' -'
-          elif y==l-1:
-            s+= ''
-          else:
-            s+= '--'
-        else:
-          if y==0 or y==l-1:
-            if y==0:  
-              s+= '|'
-            if y==l-1:
-              s+= ' |'
-          else:
-            if fill:        
-              s+= ' '+simbol
-            else:
-              s+= '  '
-      s+='\n'
-    print(s)
-  
-  l = int(input('Введите сторону квадрата'))
-  s = input('Введите символ')
-  z = bool(int(input('Закрашивать? (0,1)')))
-  printSquere(l, s, z)  
-  
+</code></pre></div></div></div><div><h2>Практические задания</h2><button py-click="PZ_5_3_5_bulls_and_cows">PZ_5_3_5_bulls_and_cows</button><div class="code hide"><span>Показать код</span><pre><code>  # Написать игру «Быки и коровы». Программа «за-
+  # гадывает» четырёхзначное число и играющий должен
+  # угадать его. После ввода пользователем числа программа
+  # сообщает, сколько цифр числа угадано (быки) и сколько
+  # цифр угадано и стоит на нужном месте (коровы). После
+  # отгадывания числа на экран необходимо вывести коли-
+  # чество сделанных пользователем попыток. В программе
+  # необходимо использовать рекурсию.
+  num = ''.join(random.sample(string.digits, 4))
+  count = 0
+  # print(num)
+  def recurcive(num, count):
+    count+=1
+    userNum = input('Угадай число: ')
+    cows = 0
+    bulls = 0
+    newUserNum = ''
+    for n in userNum:
+      if n not in newUserNum:
+        newUserNum += n
+    for n in newUserNum:
+      if (n in num):
+        bulls+=1
+    for i in range(4):
+      if num[i]==userNum[i]:
+        cows+=1
+    if userNum != num:
+      print('Bulls: '+str(bulls)+'. Cows: '+ str(cows))
+      recurcive(num, count)
+    else:
+      print('Congrats! I\'s takes ' + str(count) + ' trys')
+  recurcive(num, count)
 </code></pre></div></div><div><h2>Остальные задания</h2><button py-click="print_square">print_square</button><div class="code hide"><span>Показать код</span><pre><code># Напишите функцию, которая отображает пустой или
 # заполненный квадрат из некоторого символа. Функция
 # принимает в качестве параметров: длину стороны ква-
@@ -352,6 +364,12 @@
       if (parent) {
         parent.classList.toggle('hide')
       }
+      const parent2 = e.target.closest('.module')
+      if (parent2 && e.target.tagName=="P") {
+        parent2.classList.toggle('close')
+        e.target.innerText = e.target.innerText == 'Открыть' ? 'Закрыть' : 'Открыть'
+      }
+
     })
   </script>
 </body>

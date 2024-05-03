@@ -49,7 +49,7 @@ for (let string of pyArr) {
 }
 // const code = `<pre><code>${funcBody}</code></pre>`
 // pyToJs += `<div class="code hide"><span>Показать код</span>${code}</div>`
-// now.funcBody = funcBody
+now.funcBody = funcBody
 if (now.type in types) {
   types[now.type].push({ ...now })
 } else {
@@ -61,10 +61,27 @@ for (let type in types) {
   if (types[type].length) {
     const name = type == 'DZ' ? 'Домашние задания' : type == 'PZ' ? 'Практические задания' : 'Остальные задания'
     pyToJs += `<div><h2>${name}</h2>`
+    let currentModule = 0
+    let isModule = false
     for (el of types[type]) {
+      if (currentModule != el.module) {
+        if (isModule) {
+          pyToJs += '</div>'
+          isModule = false
+        }
+        if (types[type].filter(el1 => el1.module == el.module).length>1) {
+          currentModule = el.module
+          isModule = true
+          pyToJs += `<div class="module close">Модуль ${el.module}<p>Открыть</p><br>`
+        }
+      }
       const button = `<button py-click="${el.name}">${el.name}</button>`
       const code = `<pre><code>${el.funcBody.replaceAll('>', '&gt;').replaceAll('<', '&lt;') }</code></pre>`
       pyToJs += `${button}<div class="code hide"><span>Показать код</span>${code}</div>`
+    }
+    if (isModule) {
+      pyToJs += '</div>'
+      isModule = false
     }
     pyToJs += '</div>'
   }  
