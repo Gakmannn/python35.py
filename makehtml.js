@@ -1,4 +1,3 @@
-const { log } = require('console')
 let fs = require('fs')
 let html = fs.readFileSync('index.html', 'utf8')
 let python = fs.readFileSync('funcs.py', 'utf8')
