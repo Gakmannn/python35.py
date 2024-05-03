@@ -1070,3 +1070,166 @@ print(random_list_of_nums)
 # print ('heap_sort', heapTime/1000)
 # print ('quicksort', quickTime/1000)
 # print ('all', time.time()-mainStart)
+
+# ?Кортежи
+# https://metanit.com/python/tutorial/3.2.php
+tom = ("Tom", 37, "Google", "software developer")
+# !'tuple' object does not support item assignment
+# tom[0] = "NotTom"
+
+name, age, company, position = ("Tom", 37, "Google", "software developer")
+print(tom[1:3])
+
+def print_person(name, age, company):
+  print(f"Name: {name}  Age: {age}  Company: {company}")
+ 
+tom = ("Tom", 22)
+print_person(*tom, "Microsoft")     # Name: Tom  Age: 22  Company: Microsoft
+ 
+bob = ("Bob", 41, "Apple")
+print_person(*bob)      # Name: Bob  Age: 41  Company: Apple
+
+print(list(bob))
+
+
+# ?Словари
+# https://metanit.com/python/tutorial/3.3.php
+
+users = {1: "Tom", 2: "Bob", 3: "Bill"}
+emails = {"tom@gmail.com": "Tom", "bob@gmai.com": "Bob", "sam@gmail.com": "Sam"}
+
+users_list = [
+    ["+384767557", "Bob"],
+    ["+958758767", "Alice"],
+]
+users_dict = dict(users_list)
+print(users_dict) 
+# !Нет ключа KeyError
+# user = users_dict["+4444444"]
+
+key = "+4444444"
+if key in users_dict:
+    user = users_dict[key]
+    print(user)
+else:
+    print("Элемент не найден")
+    
+# get(key): возвращает из словаря элемент с ключом key. Если элемента с таким ключом нет, то возвращает значение None
+
+# get(key, default): возвращает из словаря элемент с ключом key. Если элемента с таким ключом нет, то возвращает значение по умолчанию default
+
+print(users_dict.get("+4444444"))
+print(users_dict.get("+4444444", None))
+del users_dict["+384767557"]
+print(users_dict)
+
+# pop(key): удаляет элемент по ключу key и возвращает удаленный элемент. Если элемент с данным ключом отсутствует, то генерируется исключение KeyError
+
+# pop(key, default): удаляет элемент по ключу key и возвращает удаленный элемент. Если элемент с данным ключом отсутствует, то возвращается значение default
+
+# Если необходимо удалить все элементы, то в этом случае можно воспользоваться методом clear():
+# users.clear()
+
+users = users_dict
+users["+465413"]="dsfsdf"
+print(users)
+print(users_dict)
+
+# Метод copy() копирует содержимое словаря, возвращая новый словарь:
+users1 = users_dict.copy()
+users1["+465413"]="SDFDSFDS"
+users1["+465413d"]="dsfsdfdfgdf"
+print(users1)
+print(users_dict)
+
+# Метод update() объединяет два словаря:
+users_dict.update(users1)
+print(users_dict)
+
+# При этом словарь users1 остается без изменений. Изменяется только словарь users, в который добавляются элементы другого словаря. Но если необходимо, чтобы оба исходных словаря были без изменений, а результатом объединения был какой-то третий словарь, то можно предварительно скопировать один словарь в другой:
+
+# users2 = users_dict.copy()
+# users2.update(users1)
+
+users = {
+    "+11111111": "Tom",
+    "+33333333": "Bob",
+    "+55555555": "Alice"
+}
+for key in users:
+    print(f"Phone: {key}  User: {users[key]} ")
+
+users = {
+  "+11111111": "Tom",
+  "+33333333": "Bob",
+  "+55555555": "Alice"
+}
+for key, value in users.items():
+    print(f"Phone: {key}  User: {value} ")
+    
+for key in users.keys():
+    print(key)
+    
+for value in users.values():
+    print(value)
+    
+print(users.items())
+print(users.keys())
+print(users.values())
+
+users = {
+    "Tom": {
+        "phone": "+971478745",
+        "email": "tom12@gmail.com"
+    },
+    "Bob": {
+        "phone": "+876390444",
+        "email": "bob@gmail.com",
+        "skype": "bob123"
+    }
+}
+
+old_email = users["Tom"]["email"]
+users["Tom"]["email"] = "supertom@gmail.com"
+print(users["Tom"]) 
+
+# ?Множества
+# https://metanit.com/python/tutorial/3.4.php
+
+users = {"Tom", "Bob", "Alice", "Tom"}
+print(users)    # {"Alice", "Bob", "Tom"}
+
+people = ["Mike", "Bill", "Ted"]
+users = set(people)
+print(users)    # {"Mike", "Bill", "Ted"}
+
+# Функцию set удобно применять для создания пустого множества:
+users = set()
+print(len(users))
+users.add("Sam")
+users.add("Sam")
+users.add("Sam")
+users.add("Sam")
+print(users)
+user = "Tom"
+if user in users: 
+    users.remove(user)
+print(users)
+
+# Удаляет элемент, если он есть, не вызывая ошибки
+users.discard("Tim")
+users.discard("Tom")
+users.discard("Tam")
+print(users)
+
+# Для удаления всех элементов вызывается метод clear():
+users.clear()
+
+users = {"Tom", "Bob", "Alice"}
+ 
+for user in users:
+    print(user)
+    
+users = {"Tom", "Bob", "Alice"}
+students = users.copy()
+print(students)     # {"Tom", "Bob", "Alice"}
