@@ -735,7 +735,7 @@ def printSquere(lenght:int, simbol:str, fill:bool)->None:
     s+='\n'
   print(s)
   
-# printSquere(5, '*', True)
+# printSquere(15, '*', True)
 # l = int(input('Введите сторону квадрата'))
 # s = input('Введите символ')
 # z = bool(int(input('Закрашивать? (0,1)')))
@@ -1233,3 +1233,42 @@ for user in users:
 users = {"Tom", "Bob", "Alice"}
 students = users.copy()
 print(students)     # {"Tom", "Bob", "Alice"}
+
+
+# try: 
+#   stream = open('./text.txt', "at")
+#   stream.write('New string\n')
+#   stream.close()
+# except Exception as exc: 
+#   print("Cannot open the file:", exc)
+
+
+try: 
+  for line in open('./text.txt', "rt"):
+    print(line, end='')
+except Exception as exc: 
+  print("Cannot open the file:", exc)
+
+
+
+data = bytearray(10) 
+
+for i in range(10):
+  data[i] = 10-i
+
+try: 
+  bf = open('file.bin', 'wb') 
+  bf.write(data) 
+  bf.close() 
+except IOError as e: 
+  print("I/O error occurred:", e)
+
+
+try: 
+  bf = open('file.bin', 'rb') 
+  bf.readinto(data) 
+  bf.close() 
+  for b in data: 
+    print(hex(b), end=' ') 
+except IOError as e: 
+  print("I/O error occurred:", e)
