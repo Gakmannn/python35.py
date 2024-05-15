@@ -4,6 +4,10 @@ import random
 import operator
 import re
 import time
+import math as m
+from math import pi as PI, sin as SinusFunction
+
+
 
 with contextlib.suppress(ImportError):
     from pyscript import window
@@ -1272,3 +1276,31 @@ try:
     print(hex(b), end=' ') 
 except IOError as e: 
   print("I/O error occurred:", e)
+  
+print(dir(m))
+
+from random import random, seed 
+seed(0)
+for i in range(5): 
+ print(random())
+ 
+import platform
+
+print(platform.platform(aliased = False, terse = False))
+print(platform.machine())
+print(platform.processor())
+print(platform.python_version_tuple())
+
+import module
+print(module.fix)
+print(module._notChange)
+module._notChange = 15
+print(module._notChange)
+print(module.hello())
+
+import sys
+
+print (sys.path)
+
+from extra.good.alpha import FunA
+
