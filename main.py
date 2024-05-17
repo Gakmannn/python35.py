@@ -1301,6 +1301,50 @@ print(module.hello())
 import sys
 
 print (sys.path)
+sys.path.append('c:\\Users\\N.Gakman\\Documents\\python35\\extra.zip')
 
-from extra.good.alpha import FunA
+from extra.good.alpha import FunA # type: ignore
 
+def powersOf2(n): 
+ pow = 1 
+ for i in range(2,n+1): 
+  yield pow 
+  pow *= i 
+t = [x for x in powersOf2(5)] 
+print(t)
+
+def powersOf2(n): 
+ pow = 1 
+ for i in range(n): 
+  yield pow 
+  pow *= 2 
+for i in range(20): 
+ if i in powersOf2(4): 
+  print(i)
+  
+def Fib(n): 
+ p = pp = 1 
+ for i in range(n): 
+  if i in [0, 1]: 
+    yield 1 
+  else: 
+    n = p + pp 
+    pp, p = p, n 
+    yield n 
+fibs = list(Fib(77)) 
+print(fibs)
+
+
+def outer(par): 
+ loc = {"par": par} 
+ def inner(): 
+   loc['par'] = loc['par']+1 
+   return loc['par']
+ return inner 
+ 
+var = 1 
+fun = outer(var) 
+print(fun())
+print(fun())
+print(fun())
+print(fun())
