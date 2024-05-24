@@ -1183,6 +1183,7 @@ print(users.values())
 
 users = {
     "Tom": {
+        "name": "Tom",
         "phone": "+971478745",
         "email": "tom12@gmail.com"
     },
@@ -1192,6 +1193,15 @@ users = {
         "skype": "bob123"
     }
 }
+
+userList = (
+  {"name": "Tom", "phone": "+971478745", "email": "tom12@gmail.com"},
+  {"name": "Bob", "phone": "+876390444", "email": "bob@gmail.com", "skype": "bob123"}
+)
+
+userList[1]['name'] = 'NotBob'
+userList[1]['name1'] = 'Bobby'
+print(userList)
 
 old_email = users["Tom"]["email"]
 users["Tom"]["email"] = "supertom@gmail.com"
@@ -1348,3 +1358,151 @@ print(fun())
 print(fun())
 print(fun())
 print(fun())
+
+# a0ddfabdd36caf357cfdb47776f460ffc5bae5ee
+
+class TheSimplestClass: 
+  pass
+
+myObj = TheSimplestClass()
+myObj1 = TheSimplestClass()
+myObj2 = TheSimplestClass()
+print(type(myObj))
+
+class Stack: 
+  def __init__(self): 
+    self.__stackList = []
+    
+  def push(self, val): 
+    self.__stackList.append(val) 
+    
+  def pop(self): 
+    val = self.__stackList[-1] 
+    del self.__stackList[-1] 
+    return val 
+    
+class AddingStack(Stack):
+  def __init__(self):
+    Stack.__init__(self)
+    self.__sum = 0    
+  
+  def push(self, val): 
+    Stack.push(self, val)  
+    self.__sum += val 
+
+  def getSum(self): 
+    return self.__sum
+
+  def pop(self): 
+    val = Stack.pop(self) 
+    self.__sum -= val 
+    return val
+  
+sumStack = AddingStack() 
+sumStack.push(3)
+sumStack.push(3)
+sumStack.push(3)
+print('SL', sumStack._Stack__stackList)
+print(sumStack.getSum())
+sumStack.pop()
+print(sumStack.getSum())
+  
+stackObject = Stack() 
+stackObject2 = Stack() 
+stackObject.push(3)
+stackObject.push(2)
+stackObject.push(1)
+print(stackObject.__dict__) 
+print(stackObject.pop())
+print(stackObject.pop())
+print(stackObject.pop())
+
+class ExampleClass: 
+  def __init__(self, val = 1): 
+    self.__first = val 
+  def setSecond(self, val): 
+    self.__second = val 
+  def getSecond(self): 
+    return self.__second
+exampleObject1 = ExampleClass() 
+exampleObject2 = ExampleClass(2) 
+exampleObject2.setSecond(3) 
+exampleObject3 = ExampleClass(4) 
+exampleObject3.__third = 5
+print('***************')
+if hasattr(exampleObject3, '_ExampleClass__first'): 
+ print(exampleObject3._ExampleClass__first)
+print('***************')
+exampleObject1.__second = 10
+exampleObject1.setSecond(10)
+exampleObject1.__dict__['_ExampleClass__second'] = 11
+print(exampleObject1.__dict__) 
+print(exampleObject1.getSecond()) 
+print(exampleObject2.__dict__) 
+print(exampleObject3.__dict__)
+
+class ExampleClass: 
+  counter = 0 
+  def __init__(self, val = 1): 
+    self.__first = val 
+    ExampleClass.counter += 1 
+    self.id = ExampleClass.counter
+    
+exampleObject1 = ExampleClass() 
+exampleObject2 = ExampleClass(2) 
+exampleObject3 = ExampleClass(4) 
+print(ExampleClass.__dict__)
+print(exampleObject1.__dict__, exampleObject1.id, exampleObject1.counter, ExampleClass.counter)
+print(exampleObject2.__dict__, exampleObject2.id, exampleObject2.counter, ExampleClass.counter)
+print(exampleObject3.__dict__, exampleObject3.id, exampleObject3.counter, ExampleClass.counter)
+
+
+class ExampleClass:
+ varia = 1
+ def __init__(self, val):
+    ExampleClass.varia = val
+
+print(ExampleClass.__dict__)
+exampleObject = ExampleClass(2)
+print(ExampleClass.__dict__)
+print(exampleObject.__dict__)
+
+class ExampleClass: 
+ a = 1 
+ def __init__(self): 
+  self.b = 2 
+exampleObject = ExampleClass() 
+print(hasattr(exampleObject, 'b')) 
+print(hasattr(exampleObject, 'a')) 
+print(hasattr(ExampleClass, 'b')) 
+print(hasattr(ExampleClass, 'a'))
+
+print(ExampleClass.__name__)
+print(type(exampleObject).__name__)
+
+class SuperOne:
+ pass
+class SuperTwo:
+ pass
+class Sub(SuperOne, SuperTwo):
+ pass
+
+class Sub1(SuperOne):
+ pass
+
+class Sub2(Sub1):
+ pass
+
+def printBases(cls):
+ print('( ', end='')
+ for x in cls.__bases__:
+  print(x.__name__, end=' ')
+ print(')')
+ 
+ 
+printBases(SuperOne)
+printBases(SuperTwo)
+printBases(Sub)
+print(Sub1.__bases__)
+print(Sub2.__bases__)
+print(Sub2.__bases__[0].__bases__)
