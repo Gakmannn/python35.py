@@ -1420,13 +1420,18 @@ print(stackObject.pop())
 class ExampleClass: 
   def __init__(self, val = 1): 
     self.__first = val 
-  def setSecond(self, val): 
-    self.__second = val 
-  def getSecond(self): 
+  
+  @property
+  def second(self): 
     return self.__second
+  
+  @second.setter
+  def second(self, val): 
+    self.__second = val 
+  
 exampleObject1 = ExampleClass() 
 exampleObject2 = ExampleClass(2) 
-exampleObject2.setSecond(3) 
+exampleObject2.second = 3
 exampleObject3 = ExampleClass(4) 
 exampleObject3.__third = 5
 print('***************')
@@ -1434,10 +1439,10 @@ if hasattr(exampleObject3, '_ExampleClass__first'):
  print(exampleObject3._ExampleClass__first)
 print('***************')
 exampleObject1.__second = 10
-exampleObject1.setSecond(10)
+exampleObject1.second = 10
 exampleObject1.__dict__['_ExampleClass__second'] = 11
 print(exampleObject1.__dict__) 
-print(exampleObject1.getSecond()) 
+print(exampleObject1.second) 
 print(exampleObject2.__dict__) 
 print(exampleObject3.__dict__)
 
@@ -1506,3 +1511,32 @@ printBases(Sub)
 print(Sub1.__bases__)
 print(Sub2.__bases__)
 print(Sub2.__bases__[0].__bases__)
+
+# определение функции декоратора
+def select(input_func):    
+    def output_func():      # определяем функцию, которая будет выполняться вместо оригинальной
+        print("*****************")  # перед выводом оригинальной функции выводим всякую звездочки
+        input_func()                # вызов оригинальной функции
+        print("*****************")  # после вывода оригинальной функции выводим всякую звездочки
+    return output_func     # возвращаем новую функцию
+ 
+# определение оригинальной функции
+# @select         # применение декоратора select
+def hello():
+    print("Hello METANIT.COM")
+ 
+# вызов оригинальной функции
+hello()
+
+def logDecorator(f):
+  def inner(*args):
+    res = f(*args)
+    print('log decorator', 'args', args, 'res=', res)
+    return res
+  return inner
+
+@logDecorator
+def sum(a,b):
+  return a+b
+
+print(sum(1,5))
