@@ -1486,7 +1486,11 @@ print(ExampleClass.__name__)
 print(type(exampleObject).__name__)
 
 class SuperOne:
- pass
+  staticProp = 1
+  @staticmethod
+  def myStatic():
+    return SuperOne.staticProp
+  
 class SuperTwo:
  pass
 class Sub(SuperOne, SuperTwo):
@@ -1540,3 +1544,7 @@ def sum(a,b):
   return a+b
 
 print(sum(1,5))
+
+print(SuperOne.myStatic())
+superObj = SuperOne()
+print(superObj.myStatic())
