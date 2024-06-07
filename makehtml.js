@@ -35,7 +35,8 @@ for (let string of pyArr) {
 
       now.name = name
       now.type = name.split('_')[0]
-      now.sortName = name.split('_').slice(0, 4).join('')
+      now.sortName = isNaN(name.split('_')[1]) ? name.split('_')[1] : +name.split('_')[1]
+      // now.sortName = name.split('_').slice(0, 4).join('')
       now.module = name.split('_')[1]
 
       // const button = `<button py-click="${name}">${name}</button>`
@@ -56,7 +57,12 @@ if (now.type in types) {
 }
 
 for (let type in types) {
-  types[type].sort((a, b) => a.sortName.localeCompare(b.sortName))
+  types[type].sort((a, b) => {
+    if (isNaN(a.sortName)) {
+      return a.sortName.toString().localeCompare(b.sortName.toString())
+      }
+    return a.sortName - b.sortName
+  })
   if (types[type].length) {
     const name = type == 'DZ' ? 'Домашние задания' : type == 'PZ' ? 'Практические задания' : 'Остальные задания'
     pyToJs += `<div><h2>${name}</h2>`

@@ -1548,3 +1548,12 @@ print(sum(1,5))
 print(SuperOne.myStatic())
 superObj = SuperOne()
 print(superObj.myStatic())
+
+def iter():
+  for i in range(10):
+    yield i
+    
+# for i in iter():
+#   print(i)
+# for i in iter():
+#   print(i)

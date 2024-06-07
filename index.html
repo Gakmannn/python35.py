@@ -78,6 +78,7 @@
     <a href="https://tproger.ru/translations/javascript-cheatsheet">Шпоры 2</a>
     <a href="https://overapi.com/javascript">Шпоры 3</a>
     <a href="https://quickref.me/javascript">Шпоры 4</a>
+    <a href="https://tproger.ru/articles/gajd-po-magicheskim-metodam-v-python">Магические методы</a>
   </div>
   <div id="output"><div class="flex"><div><h2>Домашние задания</h2><button py-click="DZ_2_1_1_SumOrMul">DZ_2_1_1_SumOrMul</button><div class="code hide"><span>Показать код</span><pre><code># Пользователь вводит с клавиатуры три числа. В зависимости от выбора пользователя программа выводит 
 # на экран сумму трёх чисел или произведение трёх чисел
@@ -216,7 +217,40 @@
      text = text.replace(word, word.upper())
   print(text)    
 
-</code></pre></div><div class="module close">Модуль 5<p>Открыть</p><br><button py-click="DZ_5_1_3_print_square">DZ_5_1_3_print_square</button><div class="code hide"><span>Показать код</span><pre><code># Напишите функцию, которая отображает пустой или
+</code></pre></div><button py-click="DZ_5_3_5_bulls_and_cows">DZ_5_3_5_bulls_and_cows</button><div class="code hide"><span>Показать код</span><pre><code>  # Написать игру «Быки и коровы». Программа «за-
+  # гадывает» четырёхзначное число и играющий должен
+  # угадать его. После ввода пользователем числа программа
+  # сообщает, сколько цифр числа угадано (быки) и сколько
+  # цифр угадано и стоит на нужном месте (коровы). После
+  # отгадывания числа на экран необходимо вывести коли-
+  # чество сделанных пользователем попыток. В программе
+  # необходимо использовать рекурсию.
+  num = ''.join(random.sample(string.digits, 4))
+  count = 0
+  # print(num)
+  def recurcive(num, count):
+    count+=1
+    userNum = input('Угадай число: ')
+    cows = 0
+    bulls = 0
+    newUserNum = ''
+    for n in userNum:
+      if n not in newUserNum:
+        newUserNum += n
+    for n in newUserNum:
+      if (n in num):
+        bulls+=1
+    for i in range(4):
+      if num[i]==userNum[i]:
+        cows+=1
+    if userNum != num:
+      print('Bulls: '+str(bulls)+'. Cows: '+ str(cows))
+      recurcive(num, count)
+    else:
+      print('Congrats! I\'s takes ' + str(count) + ' trys')
+  recurcive(num, count)
+
+</code></pre></div><button py-click="DZ_10_1_3_print_square">DZ_10_1_3_print_square</button><div class="code hide"><span>Показать код</span><pre><code># Напишите функцию, которая отображает пустой или
 # заполненный квадрат из некоторого символа. Функция
 # принимает в качестве параметров: длину стороны ква-
 # драта, символ и переменную логического типа:
@@ -253,40 +287,7 @@
   z = bool(int(input('Закрашивать? (0,1)')))
   printSquere(l, s, z)  
   
-</code></pre></div><button py-click="DZ_5_3_5_bulls_and_cows">DZ_5_3_5_bulls_and_cows</button><div class="code hide"><span>Показать код</span><pre><code>  # Написать игру «Быки и коровы». Программа «за-
-  # гадывает» четырёхзначное число и играющий должен
-  # угадать его. После ввода пользователем числа программа
-  # сообщает, сколько цифр числа угадано (быки) и сколько
-  # цифр угадано и стоит на нужном месте (коровы). После
-  # отгадывания числа на экран необходимо вывести коли-
-  # чество сделанных пользователем попыток. В программе
-  # необходимо использовать рекурсию.
-  num = ''.join(random.sample(string.digits, 4))
-  count = 0
-  # print(num)
-  def recurcive(num, count):
-    count+=1
-    userNum = input('Угадай число: ')
-    cows = 0
-    bulls = 0
-    newUserNum = ''
-    for n in userNum:
-      if n not in newUserNum:
-        newUserNum += n
-    for n in newUserNum:
-      if (n in num):
-        bulls+=1
-    for i in range(4):
-      if num[i]==userNum[i]:
-        cows+=1
-    if userNum != num:
-      print('Bulls: '+str(bulls)+'. Cows: '+ str(cows))
-      recurcive(num, count)
-    else:
-      print('Congrats! I\'s takes ' + str(count) + ' trys')
-  recurcive(num, count)
-
-</code></pre></div></div></div><div><h2>Практические задания</h2><button py-click="PZ_5_3_5_bulls_and_cows">PZ_5_3_5_bulls_and_cows</button><div class="code hide"><span>Показать код</span><pre><code>  # Написать игру «Быки и коровы». Программа «за-
+</code></pre></div></div><div><h2>Практические задания</h2><button py-click="PZ_10_3_5_bulls_and_cows">PZ_10_3_5_bulls_and_cows</button><div class="code hide"><span>Показать код</span><pre><code>  # Написать игру «Быки и коровы». Программа «за-
   # гадывает» четырёхзначное число и играющий должен
   # угадать его. После ввода пользователем числа программа
   # сообщает, сколько цифр числа угадано (быки) и сколько
