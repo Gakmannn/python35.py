@@ -35,7 +35,7 @@ for (let string of pyArr) {
 
       now.name = name
       now.type = name.split('_')[0]
-      now.sortName = isNaN(name.split('_')[1]) ? name.split('_')[1] : +name.split('_')[1]
+      now.sortName = isNaN(name.split('_')[1]) ? name.split('_')[0] : +name.split('_')[1]
       // now.sortName = name.split('_').slice(0, 4).join('')
       now.module = name.split('_')[1]
 
