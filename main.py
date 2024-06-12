@@ -1557,3 +1557,36 @@ def iter():
 #   print(i)
 # for i in iter():
 #   print(i)
+
+# Создайте класс Complex (комплексное число). Более
+# подробно ознакомиться с комплексными числами можно
+# по ссылке.
+# Создайте перегруженные операторы для реализации
+# арифметических операций для по работе с комплексными
+# числами (операции +, -, *, /)
+
+class Complex:
+  def __init__(self, real, imag):
+    self.real = real
+    self.imag = imag
+  def __repr__(self) -> str:
+    return str(self.real) + ('+' if self.imag>=0 else '') + str(self.imag) + 'i'
+  def __add__(self, other):
+    return Complex(self.real + other.real,self.imag + other.imag)
+  def __sub__(self, other):
+    return Complex(self.real - other.real,self.imag - other.imag)
+  def __mul__(self, other):
+    return Complex(self.real * other.real + self.imag * other.imag * -1 ,self.real * other.imag+self.imag * other.real)
+  def __truediv__(self, other):
+    z3 = Complex(other.real, -other.imag)
+    delitel = (z3*other).real
+    z4 = z3*self
+    return Complex(z4.real/delitel ,z4.imag/delitel)
+    
+z1 = Complex(-4,2)
+z2 = Complex(1,-3)
+print(z1,z2)
+print(z1+z2)
+print(z1-z2)
+print(z1*z2)
+print(z1/z2)
