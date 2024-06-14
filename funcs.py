@@ -328,3 +328,4 @@ def bulls_and_cows(event):
     else:
       print('Congrats! I\'s takes ' + str(count) + ' trys')
   recurcive(num, count)
+  

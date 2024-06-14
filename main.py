@@ -1590,3 +1590,216 @@ print(z1+z2)
 print(z1-z2)
 print(z1*z2)
 print(z1/z2)
+
+class ListData:
+  def __init__(self, data):
+    self.data = data
+    self.next = None
+    
+class OneWayList:
+  def __init__(self):
+    self.index=-1
+    self.start=None
+    self.end=None    
+  def add(self, data):
+    newData = ListData(data)
+    if self.start == None:
+      self.start = newData
+    if self.end == None:
+      self.end = newData
+    else:
+      self.end.next = newData
+      self.end = newData
+    self.index += 1
+  def showList(self):
+    list = self.start
+    while list.next != None:
+      print(list.data)   
+      list = list.next
+    print(list.data)   
+  def checkKey(self, key):
+    if isinstance(key, int):
+      if key<0 or key>self.index:
+        raise KeyError
+    else:
+      raise KeyError
+  def __getitem__(self, key):
+    self.checkKey(key)
+    list = self.start
+    i = 0
+    while i<key:
+      list = list.next
+      i+=1
+    return list.data  
+  def __setitem__(self, key, value):
+    self.checkKey(key)
+    list = self.start
+    i = 0
+    while i<key:
+      list = list.next
+      i+=1
+    list.data = value
+  def __delitem__(self, key):
+    self.checkKey(key)
+    if key==0:
+      self.start = self.start.next
+    else:
+      list = self.start
+      i = 0
+      while i<key-1:
+        list = list.next
+        i+=1
+      if key==self.index:
+        list.next = None
+        self.end = list
+      else:  
+        list.next = list.next.next
+    self.index -=1
+    
+    
+      
+myList = OneWayList()
+myList.add(1)
+myList.add(2)
+myList.add(3)
+myList.add(4)
+
+print('index',myList.index)
+del myList[0] 
+print('index',myList.index)
+del myList[2] 
+print('index',myList.index)
+
+myList.add(55)
+
+print('index',myList.index)
+myList.showList()
+
+
+class ListData:
+  def __init__(self, data):
+    self.data = data
+    self.next = None
+    self.prev = None
+    
+class TwoWayList:
+  def __init__(self):
+    self.start=None
+    self.end=None    
+  def append(self, data):
+    newData = ListData(data)
+    if self.start == None:
+      self.start = newData
+    if self.end == None:
+      self.end = newData
+    else:
+      self.end.next = newData
+      newData.prev = self.end
+      self.end = newData
+  def prepend(self, data):
+    newData = ListData(data)
+    if self.start == None:
+      self.start = newData
+    if self.end == None:
+      self.end = newData
+    else:
+      newData.next = self.start
+      self.start.prev = newData
+      self.start = newData
+  def showListForvard(self):
+    list = self.start
+    while list.next != None:
+      print(list.data)   
+      list = list.next
+    print(list.data)   
+  def showListBackvard(self):
+    list = self.end
+    while list.prev != None:
+      print(list.data)   
+      list = list.prev
+    print(list.data)   
+      
+myList = TwoWayList()
+myList.append(2)
+myList.append(3)
+myList.append(4)
+myList.prepend(1)
+myList.append(5)
+myList.append(6)
+
+print('forvard')
+myList.showListForvard()
+print('backvard')
+myList.showListBackvard()
+
+# LIFO append, pop
+# FIFO append, pop(0)
+
+class Leaf:
+  def __init__(self, data):
+    self.parent = None
+    self.left = None
+    self.right = None
+    self.data = data
+  def __repr__(self):
+      return '('+('NONE' if self.left==None else str(self.left.data)) + ';' + str(self.data) + ';' +('NONE' if self.right==None else str(self.right.data)) +')'
+
+    
+class Tree:
+  def __init__(self):
+    self.head = None
+  @staticmethod
+  def find(el, data):
+    if data > el.data:
+      if el.right == None:
+        return el
+      else:
+        return Tree.find(el.right, data)
+    elif data < el.data:
+      if el.left == None:
+        return el
+      else:
+        return Tree.find(el.left, data)
+    else:
+        return el
+      
+  def add(self, data):
+    if self.head == None:
+      self.head = Leaf(data)
+    else:
+      el = Tree.find(self.head, data)
+      if el.data == data:
+        print ('jest')
+      else:
+        if data > el.data:
+          el.right = Leaf(data)
+        else:
+          el.left = Leaf(data)
+    
+
+myTree = Tree()
+myTree.add(5)
+myTree.add(10)
+myTree.add(3)
+myTree.add(100)
+myTree.add(15)
+myTree.add(50)
+myTree.add(60)
+myTree.add(1100)
+myTree.add(20)
+myTree.add(38)
+myTree.add(14)
+myTree.add(49)
+
+print(Tree.find(myTree.head, 39))
+print('_______')
+
+print(myTree.head)
+print(myTree.head.left)
+print(myTree.head.right)
+print(myTree.head.right.right)
+print(myTree.head.right.right.left)
+print(myTree.head.right.right.left.right)
+print(myTree.head.right.right.left.right.left)
+print(myTree.head.right.right.left.right.right)
+print(myTree.head.right.right.right)
