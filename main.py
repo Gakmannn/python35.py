@@ -1803,3 +1803,102 @@ print(myTree.head.right.right.left.right)
 print(myTree.head.right.right.left.right.left)
 print(myTree.head.right.right.left.right.right)
 print(myTree.head.right.right.right)
+
+class Instrument:
+  pass
+
+class Musician:
+  pass
+
+class Violin(Instrument):
+  pass
+    
+class Cello(Instrument):
+  pass
+    
+class Violinist(Musician):
+  pass
+    
+class Cellist(Musician):
+  pass
+
+class ReservationFactory:
+  def reserveInstrument() -> Instrument:
+    pass
+  def notifyPlayer() -> Musician:
+    pass
+
+class ViolinReservation(ReservationFactory):
+  def reserveInstrument() -> Violin:
+    pass
+  def notifyPlayer() -> Violinist:
+    pass
+
+class CelloReservation(ReservationFactory):
+  def reserveInstrument() -> Cello:
+    return Cello()
+  def notifyPlayer() -> Cellist:
+    return Cellist()
+  
+def reserve(reservation: ReservationFactory) -> tuple:
+  return (reservation.notifyPlayer(), reservation.reserveInstrument())
+
+reserve(ViolinReservation)
+reserve(CelloReservation)
+
+
+class Singleton:
+  __instance = None
+  def __new__(cls, *args, **kwargs):
+    if cls.__instance is None:
+      cls.__instance = super().__new__(cls)
+    return cls.__instance
+  def __init__(self, val):
+    if not hasattr(self, 'val'):
+      self.val = val
+      
+print (Singleton(None).val)
+print (Singleton(20).val)
+print (Singleton(20) == Singleton(40))
+
+class Drink:
+  def __init__(self, settings):
+    self.base = settings['base']
+    self.milk = settings['milk']
+    self.sugar = settings['sugar']
+    self.cream = settings['cream']
+    self.syrup = settings['syrup']
+
+class DrinkBuilder:
+  settings = {
+    'base': 1,
+    'milk': 0,
+    'sugar': 0,
+    'cream': 0,
+    'syrup': 0,
+  }
+  
+  def addBase(self):
+    self.settings['base'] += 1
+    return self
+
+  def addMilk(self):
+    self.settings['milk'] += 1
+    return self
+
+  def addSugar(self):
+    self.settings['sugar'] += 1
+    return self
+
+  def addCream(self):
+    self.settings['cream'] += 1
+    return self
+
+  def addSyrup(self):
+    self.settings['syrup'] += 1
+    return self
+
+  def build(self):
+    return Drink(self.settings)
+
+print(DrinkBuilder().addBase().addMilk().addSyrup().addSyrup().build().__dict__)
