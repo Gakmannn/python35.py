@@ -1902,3 +1902,97 @@ class DrinkBuilder:
     return Drink(self.settings)
 
 print(DrinkBuilder().addBase().addMilk().addSyrup().addSyrup().build().__dict__)
+
+def dz77():
+  i = 0
+  while True:
+    print (i)
+    i+=1
+    if (i>50):
+      break
+
+# dz77()
+
+import abc
+
+class Point:
+  def __init__(self, x,y):
+    self.x = x
+    self.y = y
+  def clone(self):
+    return Point(self.x, self.y)
+  # def __repr__(self) -> str:
+  #   return f'({self.x},{self.y})'
+
+class Shape(abc.ABC):
+  @abc.abstractmethod
+  def clone(self):
+    pass
+  
+class Rectangle(Shape):
+  def __init__(self, p1:Point, p2:Point):
+    self.p1 = p1 
+    self.p2 = p2
+  def clone(self):
+    return Rectangle(self.p1.clone(),self.p2.clone())
+ 
+class Circle(Shape):
+  def __init__(self, p:Point, r:float):
+    self.p = p 
+    self.r = r 
+  def clone(self):
+    return Circle(self.p.clone(),self.r)
+  
+myRect = Rectangle(Point(0,0), Point(5,3))
+myRectClone = myRect.clone()
+print(myRect,myRect.__dict__)
+print(myRectClone,myRectClone.__dict__)
+myRect.p1.x = 90
+print(myRectClone.p1.x)
+
+import datetime
+
+
+class LogToFile:
+  def __init__(self, fileName):
+    self.fileName = fileName
+  def log(self, *args):
+    print('log to file', datetime.datetime.now(), *args)
+
+class LogToDisplay:
+  def log(self, *args):
+    print('log to display', *args)
+
+class Logger:
+  def __init__(self, logObject):
+    self.logObject = logObject
+  def log(self, *args):
+    self.logObject.log(*args)
+
+# init
+logger = Logger(LogToFile('calc.log'))
+
+class Calc:
+  def __init__(self):
+    self.x=0
+  def add(self, x):
+    self.log(self.x, 'add', x)
+    self.x+=x
+  def mul(self, x):
+    self.log(self.x, 'mul', x, '***not use in prod***')
+    self.x+=x
+  def log(self, *args):
+    logger.log(*args)
+    
+c1 = Calc()
+
+c1.add(3)
+c1.add(5)
+c1.add(10)
+
+c2 = Calc()
+
+c2.add(38)
+c2.add(15)
+c2.add(-10)
+c2.mul(3)
