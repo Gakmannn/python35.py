@@ -1996,3 +1996,106 @@ c2.add(38)
 c2.add(15)
 c2.add(-10)
 c2.mul(3)
+
+class DataSource:
+    def writeData(self, data):
+      pass
+    def readData(self):
+      pass
+
+
+class FileDataSource(DataSource):
+    def __init__(self, filename):
+      self.filename = filename
+      self.data = ''
+    def writeData(self, data):
+      self.data = data
+      print(f'В файл {self.filename} записано {data}')
+    def readData(self):
+      print(f'Из файла {self.filename} прочитано {self.data}')
+      return self.data
+
+class DataSourceDecorator(DataSource):
+    def __init__(self,source: DataSource):
+        self.wrappee = source
+    def writeData(self,data):
+        self.wrappee.writeData(data)
+    def readData(self):
+        return self.wrappee.readData()
+
+class EncryptionDecorator(DataSourceDecorator):
+    def writeData(self,data):
+        data = '***' + data + '***'
+        super().writeData(data)
+        #  1. Зашифровать поданные данные.
+        #  2. Передать зашифрованные данные в метод writeData
+        #  обёрнутого объекта (wrappee).
+
+    def readData(self):
+        data = super().readData()
+        return f'{data}'.replace('***','')
+        #  1. Получить данные из метода readData обёрнутого
+        #  объекта (wrappee).
+        #  2. Расшифровать их, если они зашифрованы.
+        #  3. Вернуть результат.
+
+class CompressionDecorator(DataSourceDecorator):
+    def writeData(self,data):
+        data = '|' + data + '|'
+        super().writeData(data)
+        # 1. Запаковать поданные данные.
+        # 2. Передать запакованные данные в метод writeData
+        # обёрнутого объекта (wrappee).
+
+    def readData(self):
+        data = super().readData()
+        return f'{data}'.replace('|','')
+        # 1. Получить данные из метода readData обёрнутого
+        # объекта (wrappee).
+        # 2. Распаковать их, если они запакованы.
+        # 3. Вернуть результат.
+
+# Вариант 1. Простой пример сборки и использования декораторов
+def dumbUsageExample(salaryRecords, compression:bool, encription:bool):
+  source = FileDataSource("somefile.dat")
+  if (encription):
+    source = EncryptionDecorator(source)
+  if (compression):
+    source = CompressionDecorator(source)
+  source.writeData(salaryRecords)
+  return source.readData()
+  
+print(dumbUsageExample('salaryRecords', True, True))
+
+
+#  Вариант 2. Клиентский код, использующий внешний источник
+#  данных. Класс SalaryManager ничего не знает о том, как именно
+#  будут считаны и записаны данные. Он получает уже готовый
+#  источник данных.
+class SalaryManager:
+    def __init__(self,source: DataSource):
+      self.source = source
+      print('создан менеджер')
+
+    def load(self):
+        print('менеджер читает данные')
+        return self.source.readData()
+
+    def save(self,salaryRecords):
+        self.source.writeData(salaryRecords)
+        print('менеджер записал данные')
+    
+# Приложение может по-разному собирать декорируемые объекты, в
+# зависимости от условий использования.
+
+def extendedUsageExample(salaryRecords, compression:bool, encription:bool):
+  source = FileDataSource("somefile.dat")
+  if (encription):
+    source = EncryptionDecorator(source)
+  if (compression):
+    source = CompressionDecorator(source)
+  logger = SalaryManager(source)
+  logger.save(salaryRecords)
+  return logger.load()
+
+print(extendedUsageExample('salaryRecords', True, True))
