@@ -2099,3 +2099,21 @@ def extendedUsageExample(salaryRecords, compression:bool, encription:bool):
   return logger.load()
 
 print(extendedUsageExample('salaryRecords', True, True))
+
+import requests as r
+
+class requests:
+  '''
+  Requests HTTP Library
+  Requests is an HTTP library, written in Python, for human beings. Basic GET usage:
+  '''
+  @staticmethod
+  def get(addr):
+    '''
+    r = requests.get('htts://proxy.com?get=https://www.python.org')
+    '''
+    print('get '+addr)
+    return r.get(addr)
+    
+print(requests.get('https://ya.ru'))
+print(r.get('https://ya.ru'))
