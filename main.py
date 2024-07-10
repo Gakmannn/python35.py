@@ -1,3 +1,4 @@
+from __future__ import annotations
 import contextlib
 import string
 import random
@@ -6,7 +7,10 @@ import re
 import time
 import math as m
 from math import pi as PI, sin as SinusFunction
-
+from abc import ABC, abstractmethod
+from collections.abc import Iterable, Iterator
+from random import randrange
+from typing import List, Any
 
 
 with contextlib.suppress(ImportError):
@@ -1913,8 +1917,6 @@ def dz77():
 
 # dz77()
 
-import abc
-
 class Point:
   def __init__(self, x,y):
     self.x = x
@@ -1924,8 +1926,8 @@ class Point:
   # def __repr__(self) -> str:
   #   return f'({self.x},{self.y})'
 
-class Shape(abc.ABC):
-  @abc.abstractmethod
+class Shape(ABC):
+  @abstractmethod
   def clone(self):
     pass
   
@@ -2117,3 +2119,429 @@ class requests:
     
 print(requests.get('https://ya.ru'))
 print(r.get('https://ya.ru'))
+
+class Subject(ABC):
+    """
+    Интерфейс издателя объявляет набор методов для управлениями подписчиками.
+    """
+
+    @abstractmethod
+    def attach(self, observer: Observer) -> None:
+        """
+        Присоединяет наблюдателя к издателю.
+        """
+        pass
+
+    @abstractmethod
+    def detach(self, observer: Observer) -> None:
+        """
+        Отсоединяет наблюдателя от издателя.
+        """
+        pass
+
+    @abstractmethod
+    def notify(self) -> None:
+        """
+        Уведомляет всех наблюдателей о событии.
+        """
+        pass
+
+
+class ConcreteSubject(Subject):
+    """
+    Издатель владеет некоторым важным состоянием и оповещает наблюдателей о его
+    изменениях.
+    """
+
+    _state: int = None
+    """
+    Для удобства в этой переменной хранится состояние Издателя, необходимое всем
+    подписчикам.
+    """
+
+    _observers: List[Observer] = []
+    """
+    Список подписчиков. В реальной жизни список подписчиков может храниться в
+    более подробном виде (классифицируется по типу события и т.д.)
+    """
+
+    def attach(self, observer: Observer) -> None:
+        print("Subject: Attached an observer.")
+        self._observers.append(observer)
+
+    def detach(self, observer: Observer) -> None:
+        self._observers.remove(observer)
+
+    """
+    Методы управления подпиской.
+    """
+
+    def notify(self) -> None:
+        """
+        Запуск обновления в каждом подписчике.
+        """
+
+        print("Subject: Notifying observers...")
+        for observer in self._observers:
+            observer.update(self)
+
+    def some_business_logic(self) -> None:
+        """
+        Обычно логика подписки – только часть того, что делает Издатель.
+        Издатели часто содержат некоторую важную бизнес-логику, которая
+        запускает метод уведомления всякий раз, когда должно произойти что-то
+        важное (или после этого).
+        """
+
+        print("\nSubject: I'm doing something important.")
+        self._state = randrange(0, 4)
+
+        print(f"Subject: My state has just changed to: {self._state}")
+        self.notify()
+
+
+class Observer(ABC):
+    """
+    Интерфейс Наблюдателя объявляет метод уведомления, который издатели
+    используют для оповещения своих подписчиков.
+    """
+
+    @abstractmethod
+    def update(self, subject: Subject) -> None:
+        """
+        Получить обновление от субъекта.
+        """
+        pass
+
+
+"""
+Конкретные Наблюдатели реагируют на обновления, выпущенные Издателем, к которому
+они прикреплены.
+"""
+
+
+class ConcreteObserverA(Observer):
+    def update(self, subject: Subject) -> None:
+        if subject._state < 3:
+            print("ConcreteObserverA: Reacted to the event")
+
+
+class ConcreteObserverB(Observer):
+    def update(self, subject: Subject) -> None:
+        if subject._state == 0 or subject._state >= 2:
+            print("ConcreteObserverB: Reacted to the event")
+
+
+if __name__ == "__main__":
+    subject = ConcreteSubject()
+
+    observer_a = ConcreteObserverA()
+    subject.attach(observer_a)
+
+    observer_b = ConcreteObserverB()
+    subject.attach(observer_b)
+
+    subject.some_business_logic()
+    subject.some_business_logic()
+
+    subject.detach(observer_a)
+
+    subject.some_business_logic()
+   
+   
+    
+class Command(ABC):
+    """
+    Интерфейс Команды объявляет метод для выполнения команд.
+    """
+
+    @abstractmethod
+    def execute(self) -> None:
+        pass
+
+
+class SimpleCommand(Command):
+    """
+    Некоторые команды способны выполнять простые операции самостоятельно.
+    """
+
+    def __init__(self, payload: str) -> None:
+        self._payload = payload
+
+    def execute(self) -> None:
+        print(f"SimpleCommand: See, I can do simple things like printing"
+              f"({self._payload})")
+
+
+class ComplexCommand(Command):
+    """
+    Но есть и команды, которые делегируют более сложные операции другим
+    объектам, называемым «получателями».
+    """
+
+    def __init__(self, receiver: Receiver, a: str, b: str) -> None:
+        """
+        Сложные команды могут принимать один или несколько объектов-получателей
+        вместе с любыми данными о контексте через конструктор.
+        """
+
+        self._receiver = receiver
+        self._a = a
+        self._b = b
+
+    def execute(self) -> None:
+        """
+        Команды могут делегировать выполнение любым методам получателя.
+        """
+
+        print("ComplexCommand: Complex stuff should be done by a receiver object", end="")
+        self._receiver.do_something(self._a)
+        self._receiver.do_something_else(self._b)
+
+
+class Receiver:
+    """
+    Классы Получателей содержат некую важную бизнес-логику. Они умеют выполнять
+    все виды операций, связанных с выполнением запроса. Фактически, любой класс
+    может выступать Получателем.
+    """
+
+    def do_something(self, a: str) -> None:
+        print(f"\nReceiver: Working on ({a}.)", end="")
+
+    def do_something_else(self, b: str) -> None:
+        print(f"\nReceiver: Also working on ({b}.)", end="")
+
+
+class Invoker:
+    """
+    Отправитель связан с одной или несколькими командами. Он отправляет запрос
+    команде.
+    """
+
+    _on_start = None
+    _on_finish = None
+
+    """
+    Инициализация команд.
+    """
+
+    def set_on_start(self, command: Command):
+        self._on_start = command
+
+    def set_on_finish(self, command: Command):
+        self._on_finish = command
+
+    def do_something_important(self) -> None:
+        """
+        Отправитель не зависит от классов конкретных команд и получателей.
+        Отправитель передаёт запрос получателю косвенно, выполняя команду.
+        """
+
+        print("Invoker: Does anybody want something done before I begin?")
+        if isinstance(self._on_start, Command):
+            self._on_start.execute()
+
+        print("Invoker: ...doing something really important...")
+
+        print("Invoker: Does anybody want something done after I finish?")
+        if isinstance(self._on_finish, Command):
+            self._on_finish.execute()
+
+
+if __name__ == "__main__":
+    """
+    Клиентский код может параметризовать отправителя любыми командами.
+    """
+
+    invoker = Invoker()
+    invoker.set_on_start(SimpleCommand("Say Hi!"))
+    receiver = Receiver()
+    invoker.set_on_finish(ComplexCommand(
+        receiver, "Send email", "Save report"))
+
+    invoker.do_something_important()
+    
+    
+    
+    
+class Context():
+    """
+    Контекст определяет интерфейс, представляющий интерес для клиентов.
+    """
+
+    def __init__(self, strategy: Strategy) -> None:
+        """
+        Обычно Контекст принимает стратегию через конструктор, а также
+        предоставляет сеттер для её изменения во время выполнения.
+        """
+
+        self._strategy = strategy
+
+    @property
+    def strategy(self) -> Strategy:
+        """
+        Контекст хранит ссылку на один из объектов Стратегии. Контекст не знает
+        конкретного класса стратегии. Он должен работать со всеми стратегиями
+        через интерфейс Стратегии.
+        """
+
+        return self._strategy
+
+    @strategy.setter
+    def strategy(self, strategy: Strategy) -> None:
+        """
+        Обычно Контекст позволяет заменить объект Стратегии во время выполнения.
+        """
+
+        self._strategy = strategy
+
+    def do_some_business_logic(self) -> None:
+        """
+        Вместо того, чтобы самостоятельно реализовывать множественные версии
+        алгоритма, Контекст делегирует некоторую работу объекту Стратегии.
+        """
+
+        # ...
+
+        print("Context: Sorting data using the strategy (not sure how it'll do it)")
+        result = self._strategy.do_algorithm(["a", "b", "c", "d", "e"])
+        print(",".join(result))
+
+        # ...
+
+
+class Strategy(ABC):
+    """
+    Интерфейс Стратегии объявляет операции, общие для всех поддерживаемых версий
+    некоторого алгоритма.
+
+    Контекст использует этот интерфейс для вызова алгоритма, определённого
+    Конкретными Стратегиями.
+    """
+
+    @abstractmethod
+    def do_algorithm(self, data: List):
+        pass
+
+
+"""
+Конкретные Стратегии реализуют алгоритм, следуя базовому интерфейсу Стратегии.
+Этот интерфейс делает их взаимозаменяемыми в Контексте.
+"""
+
+
+class ConcreteStrategyA(Strategy):
+    def do_algorithm(self, data: List) -> List:
+        return sorted(data)
+
+
+class ConcreteStrategyB(Strategy):
+    def do_algorithm(self, data: List) -> List:
+        return reversed(sorted(data))
+
+
+if __name__ == "__main__":
+    # Клиентский код выбирает конкретную стратегию и передаёт её в контекст.
+    # Клиент должен знать о различиях между стратегиями, чтобы сделать
+    # правильный выбор.
+
+    context = Context(ConcreteStrategyA())
+    print("Client: Strategy is set to normal sorting.")
+    context.do_some_business_logic()
+    print()
+
+    print("Client: Strategy is set to reverse sorting.")
+    context.strategy = ConcreteStrategyB()
+    context.do_some_business_logic()
+    
+    
+    
+"""
+Для создания итератора в Python есть два абстрактных класса из встроенного
+модуля collections - Iterable, Iterator. Нужно реализовать метод __iter__() в
+итерируемом объекте (списке), а метод __next__() в итераторе.
+"""
+
+
+class AlphabeticalOrderIterator(Iterator):
+    """
+    Конкретные Итераторы реализуют различные алгоритмы обхода. Эти классы
+    постоянно хранят текущее положение обхода.
+    """
+
+    """
+    Атрибут _position хранит текущее положение обхода. У итератора может быть
+    множество других полей для хранения состояния итерации, особенно когда он
+    должен работать с определённым типом коллекции.
+    """
+    _position: int = None
+
+    """
+    Этот атрибут указывает направление обхода.
+    """
+    _reverse: bool = False
+
+    def __init__(self, collection: WordsCollection, reverse: bool = False) -> None:
+        self._collection = collection
+        self._reverse = reverse
+        self._position = -1 if reverse else 0
+
+    def __next__(self) -> Any:
+        """
+        Метод __next __() должен вернуть следующий элемент в последовательности.
+        При достижении конца коллекции и в последующих вызовах должно вызываться
+        исключение StopIteration.
+        """
+        try:
+            value = self._collection[self._position]
+            self._position += -1 if self._reverse else 1
+        except IndexError:
+            raise StopIteration()
+
+        return value
+
+
+class WordsCollection(Iterable):
+    """
+    Конкретные Коллекции предоставляют один или несколько методов для получения
+    новых экземпляров итератора, совместимых с классом коллекции.
+    """
+
+    def __init__(self, collection: list[Any] | None = None) -> None:
+        self._collection = collection or []
+
+
+    def __getitem__(self, index: int) -> Any:
+        return self._collection[index]
+
+    def __iter__(self) -> AlphabeticalOrderIterator:
+        """
+        Метод __iter__() возвращает объект итератора, по умолчанию мы возвращаем
+        итератор с сортировкой по возрастанию.
+        """
+        return AlphabeticalOrderIterator(self)
+
+    def get_reverse_iterator(self) -> AlphabeticalOrderIterator:
+        return AlphabeticalOrderIterator(self, True)
+
+    def add_item(self, item: Any) -> None:
+        self._collection.append(item)
+
+
+if __name__ == "__main__":
+    # Клиентский код может знать или не знать о Конкретном Итераторе или классах
+    # Коллекций, в зависимости от уровня косвенности, который вы хотите
+    # сохранить в своей программе.
+    collection = WordsCollection()
+    collection.add_item("First")
+    collection.add_item("Second")
+    collection.add_item("Third")
+
+    print("Straight traversal:")
+    print("\n".join(collection))
+    print("")
+
+    print("Reverse traversal:")
+    print("\n".join(collection.get_reverse_iterator()), end="")
+    
