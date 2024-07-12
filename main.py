@@ -2,6 +2,7 @@ from __future__ import annotations
 import contextlib
 import string
 import random
+import pickle
 import operator
 import re
 import time
@@ -2545,3 +2546,107 @@ if __name__ == "__main__":
     print("Reverse traversal:")
     print("\n".join(collection.get_reverse_iterator()), end="")
     
+# Создайте приложение для работы в библиотеке. Оно
+# должно оперировать следующими сущностями: Книга,
+# Библиотекарь, Читатель. Приложение должно позволять
+# вводить, удалять, изменять, сохранять в файл, загружать из
+# файла, логгировать действия, искать информацию (результаты поиска выводятся на экран или файл) о сущностях.
+# При реализации используйте максимально возможное
+# количество паттернов проектирования.
+
+class LibraryApp:
+  @staticmethod
+  def init():
+    Library.init()
+    Book.init()
+
+class Library:
+  _data = {
+    'books': [],
+    'librarians': [],
+    'readers': [],
+  }
+  @staticmethod
+  def init(): 
+    for el in Library._data.keys():
+      with open(el+'.pickle', 'rb') as f:
+        Library._data[el].extend(pickle.load(f))
+    
+  @staticmethod
+  def save(el:Book|Human):
+    name = el.__class__.__name__.lower()
+    with open(name+'s.pickle', 'wb') as f:
+      pickle.dump(Library._data[name+'s'], f)
+
+  @staticmethod
+  def add(el:Book|Human):
+    name = el.__class__.__name__.lower()
+    Library._data[name+'s'].append(el)
+    Library.save(el)
+    
+  @staticmethod
+  def remove(el:Book|Human):
+    name = el.__class__.__name__.lower()
+    Library._data[name+'s'].remove(el)
+    Library.save(el)
+    
+      
+class Book:
+  idbn = 0
+  def __init__ (self, author:str, title:str, year:int, taked=False,card=None):
+    self.author = author
+    self.title = title
+    self.year = year
+    self.taked = taked
+    Book.idbn += 1
+    self.idbn = Book.idbn
+    self.card = card if card else []
+    Book.save()
+  def take(self, reader:Reader, librarian:Librarian):
+    self.taked = True
+    self.card.append({
+      'reader': reader, 
+      'librarian': librarian, 
+      'returnBefore':datetime.datetime.now() + datetime.timedelta(days=7), 
+      'returned': None
+    })
+    Library.save(self)
+  def getBack(self):
+    self.taked = False
+    self.card[-1]['returned'] = datetime.datetime.now()
+    Library.save(self)
+  @staticmethod
+  def init(): 
+    with open('idbn.pickle', 'rb') as f:
+      Book.idbn = pickle.load(f)
+  @staticmethod
+  def save(): 
+    with open('idbn.pickle', 'wb') as f:
+      pickle.dump(Book.idbn, f)
+    
+class Human:
+  def __init__ (self, name:str, snils:int, year:int):
+    self.snils = snils
+    self.name = name
+    self.year = year
+
+class Librarian(Human):
+  pass
+
+class Reader(Human):
+  pass  
+
+# book = Book('a','b',2011)
+# Library.add(book)
+# Library.save(book)
+# book = Librarian('lla',123,2011)
+# Library.add(book)
+# Library.save(book)
+# book = Reader('all',321,2011)
+# Library.add(book)
+# Library.save(book)
+# book = Book('ab','bc',2010)
+# Library.add(book)
+# book.take(Library.__dict__['_readers'][0], Library.__dict__['_librarians'][0])
+
+LibraryApp.init()
