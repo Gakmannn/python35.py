@@ -3,6 +3,7 @@ import contextlib
 import string
 import random
 import pickle
+# import statemanager as sm
 import operator
 import re
 import time
@@ -12,7 +13,7 @@ from abc import ABC, abstractmethod
 from collections.abc import Iterable, Iterator
 from random import randrange
 from typing import List, Any
-
+import uuid
 
 with contextlib.suppress(ImportError):
     from pyscript import window
@@ -2554,54 +2555,60 @@ if __name__ == "__main__":
 # При реализации используйте максимально возможное
 # количество паттернов проектирования.
 
+# Перенесено в модуль
+# class SateManager:
+#   __instance = None
+#   def __new__(cls, *args, **kwargs):
+#     if cls.__instance is None:
+#       cls.__instance = super().__new__(cls)
+#     return cls.__instance
+#   def load(self, data):
+#     '''
+#     data is dict with filename keys 
+#     '''
+#     for el in data.keys():
+#       with open(el+'.pickle', 'rb') as f:
+#         data[el].extend(pickle.load(f))
+#   def save(self, el:Book|Human, l:Library):
+#     name = el.__class__.__name__.lower()
+#     with open(name+'s.pickle', 'wb') as f:
+#       pickle.dump(l.data[name+'s'], f)
+
 class LibraryApp:
+  library:Library
   @staticmethod
   def init():
-    Library.init()
-    Book.init()
-
+    LibraryApp.library = Library()
+    
+  
+  
 class Library:
-  _data = {
-    'books': [],
-    'librarians': [],
-    'readers': [],
-  }
-  @staticmethod
-  def init(): 
-    for el in Library._data.keys():
-      with open(el+'.pickle', 'rb') as f:
-        Library._data[el].extend(pickle.load(f))
+  def __init__(self): 
+    self.data = {'books': [],'librarians': [],'readers': [],}
+    sm.load(self.data)
     
-  @staticmethod
-  def save(el:Book|Human):
-    name = el.__class__.__name__.lower()
-    with open(name+'s.pickle', 'wb') as f:
-      pickle.dump(Library._data[name+'s'], f)
+  def save(self, el:Book|Human):
+    sm.save(el, self.data)
 
-  @staticmethod
-  def add(el:Book|Human):
+  def add(self, el:Book|Human):
     name = el.__class__.__name__.lower()
-    Library._data[name+'s'].append(el)
-    Library.save(el)
+    self._data[name+'s'].append(el)
+    self.save(el)
     
-  @staticmethod
-  def remove(el:Book|Human):
+  def remove(self, el:Book|Human):
     name = el.__class__.__name__.lower()
-    Library._data[name+'s'].remove(el)
-    Library.save(el)
+    self._data[name+'s'].remove(el)
+    self.save(el)
     
       
 class Book:
-  idbn = 0
   def __init__ (self, author:str, title:str, year:int, taked=False,card=None):
     self.author = author
     self.title = title
     self.year = year
     self.taked = taked
-    Book.idbn += 1
-    self.idbn = Book.idbn
+    self.idbn = uuid.uuid4()
     self.card = card if card else []
-    Book.save()
   def take(self, reader:Reader, librarian:Librarian):
     self.taked = True
     self.card.append({
@@ -2610,19 +2617,11 @@ class Book:
       'returnBefore':datetime.datetime.now() + datetime.timedelta(days=7), 
       'returned': None
     })
-    Library.save(self)
+    # Library.save(self)
   def getBack(self):
     self.taked = False
     self.card[-1]['returned'] = datetime.datetime.now()
-    Library.save(self)
-  @staticmethod
-  def init(): 
-    with open('idbn.pickle', 'rb') as f:
-      Book.idbn = pickle.load(f)
-  @staticmethod
-  def save(): 
-    with open('idbn.pickle', 'wb') as f:
-      pickle.dump(Book.idbn, f)
+    # Library.save(self)
     
 class Human:
   def __init__ (self, name:str, snils:int, year:int):
@@ -2636,17 +2635,4 @@ class Librarian(Human):
 class Reader(Human):
   pass  
 
-# book = Book('a','b',2011)
-# Library.add(book)
-# Library.save(book)
-# book = Librarian('lla',123,2011)
-# Library.add(book)
-# Library.save(book)
-# book = Reader('all',321,2011)
-# Library.add(book)
-# Library.save(book)
-# book = Book('ab','bc',2010)
-# Library.add(book)
-# book.take(Library.__dict__['_readers'][0], Library.__dict__['_librarians'][0])
-
-LibraryApp.init()
+# LibraryApp.init()
