@@ -1,20 +1,41 @@
 from library import Library
 
-class app:
-  library:Library
-  @staticmethod
-  def init():
-    app.library = Library()
-    print(app.library.__dict__)
-  @staticmethod
-  def add(usr:int, ):
+class App:
+  def __init__(self):
+    self.library = Library()
+    print(self.library.__dict__)
+  def add(self,usr:int, ):
     pass
-  @staticmethod
-  def remove():
+  def remove(self,):
     pass
-  @staticmethod
-  def find(type, code):
-    for el in app.library.data[type]:
+  def find(self,type, code):
+    for el in self.library.data[type]:
       if el.snils==code:
         return el
     return None
+  
+class ScreenLogger:
+  def __init__(self, app):
+    self.app = app
+  def add(self,usr:int, ):
+    self.app.add(usr)
+    pass
+  def remove(self,):
+    self.app.remove(usr)
+    pass
+  def find(self,type, code):
+    res = self.app.find(type, code)
+    return res
+
+class FileLogger:
+  def __init__(self, app):
+    self.app = app
+  def add(self,usr:int, ):
+    self.app.add(usr)
+    pass
+  def remove(self,):
+    self.app.remove(usr)
+    pass
+  def find(self,type, code):
+    res = self.app.find(type, code)
+    return res
