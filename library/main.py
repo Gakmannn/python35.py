@@ -68,7 +68,7 @@ if __name__ == "__main__":
   app = App()
   app = FileLogger(app)
   try:
-    if sys.argv[1]=='1':
+    if sys.argv[2]=='1':
       app = ScreenLogger(app)
   except:
     pass
