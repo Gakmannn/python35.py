@@ -14,6 +14,7 @@ from collections.abc import Iterable, Iterator
 from random import randrange
 from typing import List, Any
 import uuid
+import inspect
 
 with contextlib.suppress(ImportError):
     from pyscript import window
@@ -2600,8 +2601,13 @@ class Library:
     self._data[name+'s'].remove(el)
     self.save(el)
     
+    
+class SourceCodeMixin:
+  @property
+  def sourcecode(self):
+    return inspect.getsource(self.__class__)    
       
-class Book:
+class Book(SourceCodeMixin):
   def __init__ (self, author:str, title:str, year:int, taked=False,card=None):
     self.author = author
     self.title = title
@@ -2636,3 +2642,6 @@ class Reader(Human):
   pass  
 
 # LibraryApp.init()
+      
+b = Book('sdf','sdfsd',1002)
+print(b.sourcecode)
