@@ -2645,3 +2645,8 @@ class Reader(Human):
       
 b = Book('sdf','sdfsd',1002)
 print(b.sourcecode)
+
+def sum(arr):
+  return 5  
+
+assert sum([1, 2, 3]) == 6, "Should be 6"
