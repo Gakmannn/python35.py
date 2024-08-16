@@ -44,7 +44,7 @@ class DiscoveryProtocol:
 
             # ждем приемлемого ответа не более 5 секунд, игнорируя таймауты и неревалентные пакеты
             data, addr = self._network.recv_json_until(self._is_message_for_me, timeout=5.0)
-            print(addr)
+
             # если пришло что-то наше
             if data:
                 action, sender = data['action'], data['sender']
@@ -70,6 +70,9 @@ class DiscoveryProtocol:
             callback(*results)
         threading.Thread(target=await_with_callback, daemon=True).start()
 
+
+# https://tirinox.ru/?s=%D0%B4%D1%83%D1%80%D0%B0%D0%BA
+# https://github.com/tirinox/durakmq/blob/master/durak.kv
 
 if __name__ == '__main__':
     print('Testing the discovery protocol.')
