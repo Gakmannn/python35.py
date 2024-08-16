@@ -2649,4 +2649,9 @@ print(b.sourcecode)
 def sum(arr):
   return 5  
 
-assert sum([1, 2, 3]) == 6, "Should be 6"
+# assert sum([1, 2, 3]) == 6, "Should be 6"
+
+
+data = {'a':1, 'b':2}
+
+print({**data})

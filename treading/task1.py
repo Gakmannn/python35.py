@@ -12,9 +12,10 @@ list = []
 results = {}
 
 def fill(list):
-  for _ in range(10):
+  for _ in range(100000000):
     list.append(randint(0,100))
-  print(list)
+  print('массив готов')
+  # print(list)
   
 def mySum(list):
   results['sum']=sum(list)
