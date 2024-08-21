@@ -1,8 +1,13 @@
 // database
+// datasource db {
+//   provider = "postgresql"
+//   url      = "postgresql://postgres:121518@localhost:5432/python?schema=public"
+// }
 datasource db {
-  provider = "postgresql"
-  url      = "postgresql://postgres:121518@localhost:5432/python?schema=public"
+  provider = "sqlite"
+  url      = "file:database.db"
 }
+
 
 // generator
 generator client {
