@@ -7,7 +7,8 @@ datasource db {
   provider = "sqlite"
   url      = "file:database.db"
 }
-
+// изменили этот файл,- делаем
+// prisma db push
 
 // generator
 generator client {
