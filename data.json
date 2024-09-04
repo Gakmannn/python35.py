@@ -1,0 +1,10 @@
+[
+  {"id": 1, "univer": "TOP", "kafedra": "IT", "tel": "000", "first_name": "a", "last_name": "A"
+  },
+  {"id": 2, "univer": "TOP", "kafedra": "IT", "tel": "000", "first_name": "b", "last_name": "B"
+  },
+  {"id": 3, "univer": "TOP", "kafedra": "IT", "tel": "000", "first_name": "c", "last_name": "C"
+  },
+  {"id": 4, "univer": "TOP", "kafedra": "Disign", "tel": "001", "first_name": "z", "last_name": "Z"
+  }
+]

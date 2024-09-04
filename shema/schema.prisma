@@ -1,0 +1,40 @@
+// database
+// datasource db {
+//   provider = "postgresql"
+//   url      = "postgresql://postgres:121518@localhost:5432/python?schema=public"
+// }
+datasource db {
+  provider = "sqlite"
+  url      = "file:database.db"
+}
+// изменили этот файл,- делаем
+// prisma db push
+
+// generator
+generator client {
+  provider             = "prisma-client-py"
+  recursive_type_depth = 5
+}
+
+// data models
+model post {
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String?
+  views     Int     @default(0)
+  published Boolean @default(false)
+  author_id Int?
+  author    user?   @relation(fields: [author_id], references: [id])
+}
+
+model user {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  posts post[]
+}
+
+// enum ElType {
+//   FRUIT
+//   VEGETABLE
+// }

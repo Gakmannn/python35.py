@@ -26,16 +26,44 @@ async def main() -> None:
     
     # users = await prisma.query_raw("SELECT * FROM user WHERE NOT name='user4' ORDER BY id desc LIMIT 1,3;")
     # users = await prisma.query_raw("SELECT * FROM user WHERE name LIKE '%er3%';")
-    users = await prisma.query_raw('''SELECT *
-                                   FROM user 
-                                   ORDER BY name desc 
-                                   ''')
+    # users = await prisma.query_raw('''SELECT *
+    #                                FROM user 
+    #                                ORDER BY name desc 
+    #                                ''')
 
     # u = await prisma.user.find_many(
     #     include={
     #         'posts':True
     #     }
     # )
+    
+    
+    # users = await prisma.query_raw('''
+    #                                SELECT t.id, k.name as kafedra, k.tel, t.first_name, t.last_name
+    #                                FROM kafedra as k
+    #                                INNER JOIN teachers as t 
+    #                                WHERE t.kafedra_id=k.id AND k.name=?
+    #                                ORDER BY name desc 
+    #                                ''', 'IT')
+    
+    # users = await prisma.query_raw('''
+    #                                SELECT t.id, u.name as univer, k.name as kafedra, k.tel, t.first_name, t.last_name
+    #                                FROM univer as u, kafedra as k, teachers as t 
+    #                                WHERE k.univer_id=u.id AND t.kafedra_id=k.id
+    #                                ''')
+
+    # users = await prisma.query_raw('''
+    #                                SELECT AVG(id) as avg, COUNT(*) as num, MIN(first_name), MAX(first_name), SUM(id)
+    #                                FROM teachers
+    #                                WHERE kafedra_id=1
+    #                                ''')
+    
+    users = await prisma.query_raw('''
+                                   SELECT COUNT(*) as num_of_pair, first_name
+                                   FROM teachers as t, shedule as s 
+                                   WHERE t.id=s.teacher_id
+                                   GROUP BY first_name
+                                   ''')
 
     print(users)
     

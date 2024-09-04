@@ -1,40 +1,93 @@
-// database
-// datasource db {
-//   provider = "postgresql"
-//   url      = "postgresql://postgres:121518@localhost:5432/python?schema=public"
-// }
-datasource db {
-  provider = "sqlite"
-  url      = "file:database.db"
-}
-// изменили этот файл,- делаем
-// prisma db push
-
-// generator
 generator client {
-  provider             = "prisma-client-py"
+  provider = "prisma-client-py"
   recursive_type_depth = 5
 }
 
-// data models
-model post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  views     Int     @default(0)
-  published Boolean @default(false)
-  author_id Int?
-  author    user?   @relation(fields: [author_id], references: [id])
+datasource db {
+  provider = "sqlite"
+  url      = "file:univer.db"
 }
 
-model user {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts post[]
+model univer {
+  id      Int   @id @default(autoincrement())
+  name    String
+  kafedra kafedra[]
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }
 
-// enum ElType {
-//   FRUIT
-//   VEGETABLE
-// }
+model kafedra {
+  id        Int   @id @default(autoincrement())
+  name      String
+  tel       String
+  univer_id Int
+  univer    univer @relation(fields: [univer_id], references: [id])
+  lessons   lessons[]
+  groups    groups[]
+  teachers  teachers[]
+}
+
+model teachers {
+  id          Int   @id @default(autoincrement())
+  first_name  String
+  last_name   String
+  inn         String
+  kafedra_id  Int
+  kafedra     kafedra @relation(fields: [kafedra_id], references: [id])
+  shedule     shedule[]
+  achivements achivements[]
+}
+
+model studens {
+  id          Int   @id @default(autoincrement())
+  first_name  String
+  last_name   String
+  zachetka    String
+  group_id    Int
+  group       groups @relation(fields: [group_id], references: [id])
+  achivements achivements[]
+}
+
+model groups {
+  id          Int   @id @default(autoincrement())
+  name        String
+  kafedra_id  Int
+  kafedra     kafedra @relation(fields: [kafedra_id], references: [id])
+  studens     studens[]
+  shedule     shedule[]
+}
+
+model lessons {
+  id      Int   @id @default(autoincrement())
+  name    String
+  kafedra_id  Int
+  kafedra     kafedra @relation(fields: [kafedra_id], references: [id])
+  shedule     shedule[]
+  achivements achivements[]
+}
+
+model shedule {
+  id          Int   @id @default(autoincrement())
+  date        DateTime @default(now())
+  num         Int
+  auditoria   Int
+  teacher_id  Int
+  group_id    Int
+  lesson_id   Int
+  teacher     teachers @relation(fields: [teacher_id], references: [id])
+  group       groups @relation(fields: [group_id], references: [id])
+  lesson      lessons @relation(fields: [lesson_id], references: [id])
+}
+
+model achivements {
+  id          Int   @id @default(autoincrement())
+  date        DateTime
+  teacher_id  Int 
+  student_id  Int
+  lesson_id   Int
+  ball        Int
+  teacher     teachers @relation(fields: [teacher_id], references: [id])
+  student     studens @relation(fields: [student_id], references: [id])
+  lesson      lessons @relation(fields: [lesson_id], references: [id])
+}
+
