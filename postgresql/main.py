@@ -38,13 +38,14 @@ async def main() -> None:
     # )
     
     
-    # users = await prisma.query_raw('''
-    #                                SELECT t.id, k.name as kafedra, k.tel, t.first_name, t.last_name
-    #                                FROM kafedra as k
-    #                                INNER JOIN teachers as t 
-    #                                WHERE t.kafedra_id=k.id AND k.name=?
-    #                                ORDER BY name desc 
-    #                                ''', 'IT')
+    users = await prisma.query_raw('''
+                                   SELECT *
+                                   FROM teachers as t
+                                   INNER JOIN kafedra as k
+                                   ON k.id=t.kafedra_id
+                                   ORDER BY name asc 
+                                   ''')
+                                #    WHERE k.name=?
     
     # users = await prisma.query_raw('''
     #                                SELECT t.id, u.name as univer, k.name as kafedra, k.tel, t.first_name, t.last_name
@@ -58,12 +59,12 @@ async def main() -> None:
     #                                WHERE kafedra_id=1
     #                                ''')
     
-    users = await prisma.query_raw('''
-                                   SELECT COUNT(*) as num_of_pair, first_name
-                                   FROM teachers as t, shedule as s 
-                                   WHERE t.id=s.teacher_id
-                                   GROUP BY first_name
-                                   ''')
+    # users = await prisma.query_raw('''
+    #                                SELECT COUNT(*) as num_of_pair, first_name
+    #                                FROM teachers as t, shedule as s 
+    #                                WHERE t.id=s.teacher_id
+    #                                GROUP BY first_name
+    #                                ''')
 
     print(users)
     

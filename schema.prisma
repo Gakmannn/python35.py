@@ -3,6 +3,10 @@ generator client {
   recursive_type_depth = 5
 }
 
+// datasource db {
+//   provider = "postgresql"
+//   url      = "postgresql://gnn87mailru:r5D75mq8jV5V@study.gakman.space:49226/postgres?schema=python_gnn87mailru"
+// }
 datasource db {
   provider = "sqlite"
   url      = "file:univer.db"
