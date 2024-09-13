@@ -37,6 +37,7 @@ model teachers {
   last_name   String
   inn         String
   kafedra_id  Int
+  start_date  DateTime?
   kafedra     kafedra @relation(fields: [kafedra_id], references: [id])
   shedule     shedule[]
   achivements achivements[]

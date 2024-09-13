@@ -38,13 +38,13 @@ async def main() -> None:
     # )
     
     
-    users = await prisma.query_raw('''
-                                   SELECT *
-                                   FROM teachers as t
-                                   INNER JOIN kafedra as k
-                                   ON k.id=t.kafedra_id
-                                   ORDER BY name asc 
-                                   ''')
+    # users = await prisma.query_raw('''
+    #                                SELECT *
+    #                                FROM teachers as t
+    #                                INNER JOIN kafedra as k
+    #                                ON k.id=t.kafedra_id
+    #                                ORDER BY name asc 
+    #                                ''')
                                 #    WHERE k.name=?
     
     # users = await prisma.query_raw('''
@@ -65,6 +65,16 @@ async def main() -> None:
     #                                WHERE t.id=s.teacher_id
     #                                GROUP BY first_name
     #                                ''')
+    
+    users = await prisma.query_raw('''
+                                   SELECT datetime('2022-01-01')>start_date as flag FROM teachers
+                                   ''')
+
+    await prisma.kafedra.find_many({
+        "where":{
+            "id":1
+        }
+    })
 
     print(users)
     
