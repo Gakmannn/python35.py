@@ -2655,3 +2655,4 @@ def sum(arr):
 data = {'a':1, 'b':2}
 
 print({**data})
+
